@@ -20,7 +20,7 @@
 --==========================
 -- [PRS: ADAPT]
 -- the file path where to write the data
-\set filePath 'v1.csv'
+\set filePath 'v1.txt'
 --==========================
 
 
@@ -39,9 +39,9 @@
 -- d01_postgresql-9.6-A4.pdf, page 1402, or
 -- http://www.postgresql.org/docs/9.6/static/sql-copy.html
 --==============================
-COPY (SELECT * FROM v1)
-USING DELIMITERS ','
-WITH  CSV
+COPY (SELECT * FROM v1 ORDER BY VC1 DESC, VC3 ASC)
+TO STDOUT
+WITH ( FORMAT CSV, HEADER TRUE, DELIMITER ';', FORCE_QUOTE (VC1, VC3) )
 ;
 
 
