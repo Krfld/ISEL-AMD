@@ -68,12 +68,22 @@ CREATE VIEW v1_domain( VC1, VC2, VC3 ) AS
 SELECT 'discrete', 'discrete', 'discrete'
 ;
 
+CREATE VIEW v1_class( VC1, VC2, VC3 ) AS
+SELECT '', '', 'class'
+;
+
 -- Follow the "practiceGuide.pdf" until arriving at this goal:
 -- create the "dataset view" compatible with the Orange "3-Row-Header" format
--- CREATE VIEW v1_dataset( my_order, VC1, VC2, VC3 ) AS
--- ;
+--CREATE VIEW v1_dataset( my_order, VC1, VC2, VC3 ) AS
+CREATE VIEW v1_dataset( VC1, VC2, VC3 ) AS
+SELECT VC1, VC2, VC3
+FROM v1
+;
 
-
+--INSERT INTO v1_dataset( VC1, VC2, VC3 )
+--SELECT VC1, VC2, VC3
+--FROM v1_domain
+;
 
 
 -- Follow the "practiceGuide.pdf" until arriving at this goal:
