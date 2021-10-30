@@ -20,7 +20,7 @@
 --==========================
 -- [PRS: ADAPT]
 -- the file path where to write the data
--- \set filePath 'YOUR_DRIVE:/YOUR_PATH/yourFileName.txt'
+\set filePath 'v1.csv'
 --==========================
 
 
@@ -29,7 +29,7 @@
 --==============================
 -- the COPY SQL statement executes wihin server context and thus uses postgreSQL user's credentials
 -- very important: "\o" psdql statement redirects the STDOUT into a file path - this way it uses client credentials intead of server credentials
--- \o :filePath
+\o :filePath
 
 
 
@@ -39,7 +39,9 @@
 -- d01_postgresql-9.6-A4.pdf, page 1402, or
 -- http://www.postgresql.org/docs/9.6/static/sql-copy.html
 --==============================
--- COPY ...
+COPY (SELECT * FROM v1)
+USING DELIMITERS ','
+WITH  CSV
 ;
 
 
