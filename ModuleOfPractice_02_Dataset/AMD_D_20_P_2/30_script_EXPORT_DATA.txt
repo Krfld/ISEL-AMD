@@ -32,14 +32,13 @@
 \o :filePath
 
 
-
 --==============================
 -- the COPY PostgreSQL statement
 -- for detailed information see:
 -- d01_postgresql-9.6-A4.pdf, page 1402, or
 -- http://www.postgresql.org/docs/9.6/static/sql-copy.html
 --==============================
-COPY (SELECT * FROM v1 ORDER BY VC1 DESC, VC3 ASC)
+COPY (SELECT VC1, VC2, VC3 FROM v1 ORDER BY VC1 DESC, VC3 ASC)
 TO STDOUT
 WITH ( FORMAT CSV, HEADER TRUE, DELIMITER ';', FORCE_QUOTE (VC1, VC3) )
 ;
@@ -57,7 +56,7 @@ WITH ( FORMAT CSV, HEADER TRUE, DELIMITER ';', FORCE_QUOTE (VC1, VC3) )
 -- d02_psql_withPostgreSQL.pdf, or
 -- http://www.postgresql.org/docs/9.6/static/app-psql.html
 --==============================
---\COPY ( SELECT * FROM v1 ) TO STDOUT WITH DELIMITER ';' CSV HEADER
+--\COPY ( SELECT VC1, VC2, VC3 FROM v1 ) TO STDOUT WITH DELIMITER ';' CSV HEADER
 --;
 
 -- FALTA EXPLICAR
