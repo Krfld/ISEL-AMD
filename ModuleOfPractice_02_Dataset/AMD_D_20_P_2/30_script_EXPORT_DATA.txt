@@ -59,4 +59,9 @@ WITH ( FORMAT CSV, HEADER TRUE, DELIMITER ';', FORCE_QUOTE (VC1, VC3) )
 --\COPY ( SELECT VC1, VC2, VC3 FROM v1 ) TO STDOUT WITH DELIMITER ';' CSV HEADER
 --;
 
--- FALTA EXPLICAR
+/*
+O comando \COPY excutado no terminal psql está preparado para executar operações de escrita/leitura entre cliente e servidor,
+enquanto o o comando COPY executa essas mesmas operações apenas no lado do servidor.
+Por esse motivo, operações efetuadas pelo \COPY poderiam demorar mais tempo.
+No nosso caso, como o servidor está a correr na máquina local, não existem atrasos significativos.
+*/
