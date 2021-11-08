@@ -6,7 +6,7 @@
 # ===============================
 
 
-#__________________________________________
+# __________________________________________
 # Orange Documentation:
 # http://docs.orange.biolab.si
 #
@@ -18,30 +18,30 @@
 #
 # details about data (attribute+class) characterization:
 # http://docs.orange.biolab.si/3/data-mining-library/tutorial/data.html#data-input
-#__________________________________________
+# __________________________________________
 
-#_______________________________________________________________________________
+# _______________________________________________________________________________
 # Modules to Evaluate
 import sys
 from u01_util import my_print
 import Orange as DM
 
 
-
-#_______________________________________________________________________________
+# _______________________________________________________________________________
 # read a "dataset"
 # the file name (that can be passed in the command line)
 fileName = "./_dataset/lenses.tab"
 #fileName = "./_dataset/adult_sample"
-if len( sys.argv ) > 1: fileName = sys.argv[ 1 ]
+if len(sys.argv) > 1:
+    fileName = sys.argv[1]
 
 try:
-   dataset = DM.data.Table( fileName )
+    dataset = DM.data.Table(fileName)
 except:
-   my_print( "--->>> error - can not open the file: %s" % fileName )
-   exit()
+    my_print("--->>> error - can not open the file: %s" % fileName)
+    exit()
 
-
+'''
 
 #_______________________________________________________________________________
 # variables: name (type = discrete | continuous): [value1, value2, ...]
@@ -85,3 +85,4 @@ for i in range( N ): print( dataset[ i ] )
 
 
 
+'''
