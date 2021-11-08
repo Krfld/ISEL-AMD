@@ -31,7 +31,7 @@ import Orange as DM
 # read a "dataset"
 # the file name (that can be passed in the command line)
 fileName = "./_dataset/lenses.tab"
-#fileName = "./_dataset/adult_sample"
+# fileName = "./_dataset/adult_sample"
 if len(sys.argv) > 1:
     fileName = sys.argv[1]
 
@@ -41,14 +41,22 @@ except:
     my_print("--->>> error - can not open the file: %s" % fileName)
     exit()
 
+print('\nDataset\n', dataset)
+
+print('\nDataset Domain\n', dataset.domain)
+
+print('\nDataset Domain Variables\n', dataset.domain.variables)
+
+print('\nDataset Domain Attributes\n', dataset.domain.attributes)
+
 '''
 
-#_______________________________________________________________________________
+# _______________________________________________________________________________
 # variables: name (type = discrete | continuous): [value1, value2, ...]
 # variables, in Orange, refer to features or class
 # cf., http://docs.orange.biolab.si/3/data-mining-library/tutorial/data.html#exploration-of-the-data-domain
 variable_list = dataset.domain.variables
-#variable_list = dataset.domain.attributes
+# variable_list = dataset.domain.attributes
 
 my_print( aStr = ">> %d Variables (attributes+class) <<" % len( variable_list ) )
 print( ":: name (type): [value1, value2, ...]" )
@@ -67,7 +75,7 @@ my_print( ">> Types: %d discrete, %d continuous <<" % ( nDisc, nCont ) )
 
 
 
-#_______________________________________________________________________________
+# _______________________________________________________________________________
 # Class: name (type = discrete | continuous): <value1, value2, ...>
 the_class = dataset.domain.class_var
 my_print( ">> Class <<" )
@@ -77,7 +85,7 @@ print( ":: %s (%s): %s " % ( the_class.name,
 
 
 
-#_______________________________________________________________________________
+# _______________________________________________________________________________
 # First N Instances
 N = 20
 my_print( "First %d instances:" % N )
