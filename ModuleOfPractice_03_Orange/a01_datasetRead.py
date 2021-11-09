@@ -40,7 +40,7 @@ try:
 except:
     my_print("--->>> error - can not open the file: %s" % fileName)
     exit()
-
+'''
 print('\nDataset\n', dataset)
 
 print('\nDataset Domain\n', dataset.domain)
@@ -48,14 +48,14 @@ print('\nDataset Domain\n', dataset.domain)
 print('\nDataset Domain Variables\n', dataset.domain.variables)
 
 print('\nDataset Domain Attributes\n', dataset.domain.attributes)
-
-
+'''
+'''
 # _______________________________________________________________________________
 # variables: name (type = discrete | continuous): [value1, value2, ...]
 # variables, in Orange, refer to features or class
 # cf., http://docs.orange.biolab.si/3/data-mining-library/tutorial/data.html#exploration-of-the-data-domain
 variable_list = dataset.domain.variables
-# variable_list = dataset.domain.attributes
+#variable_list = dataset.domain.attributes
 
 my_print(aStr=">> %d Variables (attributes+class) <<" % len(variable_list))
 print(":: name (type): [value1, value2, ...]")
@@ -73,8 +73,8 @@ for variable in variable_list:
     else:
         nStr += 1
 my_print(">> Types: %d discrete, %d continuous <<" % (nDisc, nCont))
-
-
+'''
+'''
 # _______________________________________________________________________________
 # Class: name (type = discrete | continuous): <value1, value2, ...>
 the_class = dataset.domain.class_var
@@ -82,11 +82,25 @@ my_print(">> Class <<")
 print(":: %s (%s): %s " % (the_class.name,
                            the_class.TYPE_HEADERS,
                            the_class.values))
-
-
+'''
+'''
 # _______________________________________________________________________________
 # First N Instances
 N = 20
 my_print("First %d instances:" % N)
 for i in range(N):
     print(dataset[i])
+'''
+
+'''
+j) A diferença entre 'dataset.domain.variables' e 'dataset.domain.attributes' é que
+as variáveis têm em consideração as classes para além dos atributos.
+
+k) 'dataset.domain.class_var' é semelhante a 'dataset.domain.attributes' onde
+o primeiro contém só as classes e o segundo só os atributos.
+'dataset.domain.variables' contém tudo (atributos + classes).
+
+É possível obter os tipos e os valores com estes métodos.
+
+É também possível aceder às linhas da tabela a partir do indice.
+'''
