@@ -49,6 +49,7 @@ print('\nDataset Domain Variables\n', dataset.domain.variables)
 
 print('\nDataset Domain Attributes\n', dataset.domain.attributes)
 
+
 # _______________________________________________________________________________
 # variables: name (type = discrete | continuous): [value1, value2, ...]
 # variables, in Orange, refer to features or class
@@ -73,20 +74,19 @@ for variable in variable_list:
         nStr += 1
 my_print(">> Types: %d discrete, %d continuous <<" % (nDisc, nCont))
 
-'''
 
 # _______________________________________________________________________________
 # Class: name (type = discrete | continuous): <value1, value2, ...>
 the_class = dataset.domain.class_var
-my_print( ">> Class <<" )
-print( ":: %s (%s): %s " % ( the_class.name,
-                             the_class.TYPE_HEADERS,
-                             the_class.values ) )
+my_print(">> Class <<")
+print(":: %s (%s): %s " % (the_class.name,
+                           the_class.TYPE_HEADERS,
+                           the_class.values))
+
 
 # _______________________________________________________________________________
 # First N Instances
 N = 20
-my_print( "First %d instances:" % N )
-for i in range( N ): print( dataset[ i ] )
-
-'''
+my_print("First %d instances:" % N)
+for i in range(N):
+    print(dataset[i])
