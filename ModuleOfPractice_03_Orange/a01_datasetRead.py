@@ -49,8 +49,6 @@ print('\nDataset Domain Variables\n', dataset.domain.variables)
 
 print('\nDataset Domain Attributes\n', dataset.domain.attributes)
 
-'''
-
 # _______________________________________________________________________________
 # variables: name (type = discrete | continuous): [value1, value2, ...]
 # variables, in Orange, refer to features or class
@@ -58,22 +56,24 @@ print('\nDataset Domain Attributes\n', dataset.domain.attributes)
 variable_list = dataset.domain.variables
 # variable_list = dataset.domain.attributes
 
-my_print( aStr = ">> %d Variables (attributes+class) <<" % len( variable_list ) )
-print( ":: name (type): [value1, value2, ...]" )
+my_print(aStr=">> %d Variables (attributes+class) <<" % len(variable_list))
+print(":: name (type): [value1, value2, ...]")
 
-nDisc=0; nCont=0; nStr=0;
+nDisc = 0
+nCont = 0
+nStr = 0
 for variable in variable_list:
-   print( ":: %s %s" % ( variable.name, variable.TYPE_HEADERS ) ),
-   if variable.is_discrete:
-      print( ": %s " % variable.values )
-      nDisc += 1
-   elif variable.is_continuous:
-      nCont += 1
-   else:
-      nStr += 1
-my_print( ">> Types: %d discrete, %d continuous <<" % ( nDisc, nCont ) )
+    print(":: %s %s" % (variable.name, variable.TYPE_HEADERS)),
+    if variable.is_discrete:
+        print(": %s " % str(variable.values))
+        nDisc += 1
+    elif variable.is_continuous:
+        nCont += 1
+    else:
+        nStr += 1
+my_print(">> Types: %d discrete, %d continuous <<" % (nDisc, nCont))
 
-
+'''
 
 # _______________________________________________________________________________
 # Class: name (type = discrete | continuous): <value1, value2, ...>
@@ -83,13 +83,10 @@ print( ":: %s (%s): %s " % ( the_class.name,
                              the_class.TYPE_HEADERS,
                              the_class.values ) )
 
-
-
 # _______________________________________________________________________________
 # First N Instances
 N = 20
 my_print( "First %d instances:" % N )
 for i in range( N ): print( dataset[ i ] )
-
 
 '''
