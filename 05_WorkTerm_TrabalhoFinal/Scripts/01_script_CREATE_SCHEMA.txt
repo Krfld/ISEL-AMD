@@ -1,7 +1,3 @@
-----------------
--- DB connection
-----------------
-
 \set dataBase fpa_db
 ;
 \set userName postgres
@@ -9,14 +5,14 @@
 \connect :dataBase :userName
 ;
 
--------------------------------
--- create the relational schema
--------------------------------
-
 DROP TABLE IF EXISTS TREATS;
 DROP TABLE IF EXISTS DOCTOR;
 DROP TABLE IF EXISTS PATIENT;
 DROP TABLE IF EXISTS DISEASE;
+
+---------
+-- DOCTOR
+---------
 
 CREATE TABLE DOCTOR
 (
@@ -26,6 +22,10 @@ CREATE TABLE DOCTOR
 )
 ;
 
+----------
+-- PATIENT
+----------
+
 CREATE TABLE PATIENT
 (
 	cc VARCHAR( 8 ) NOT NULL PRIMARY KEY,
@@ -33,6 +33,10 @@ CREATE TABLE PATIENT
 	birthDate DATE NOT NULL
 )
 ;
+
+----------
+-- DISEASE
+----------
 
 CREATE TABLE DISEASE
 (
@@ -42,6 +46,10 @@ CREATE TABLE DISEASE
 	isAstigmatic BOOLEAN NOT NULL
 )
 ;
+
+---------
+-- TREATS
+---------
 
 CREATE TABLE TREATS
 (
