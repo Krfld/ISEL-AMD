@@ -1,0 +1,59 @@
+----------------
+-- DB connection
+----------------
+
+\set dataBase fpa_db
+;
+\set userName postgres
+;
+\connect :dataBase :userName
+;
+
+-------------------------------
+-- create the relational schema
+-------------------------------
+
+DROP TABLE IF EXISTS TREATS;
+DROP TABLE IF EXISTS DOCTOR;
+DROP TABLE IF EXISTS PATIENT;
+DROP TABLE IF EXISTS DISEASE;
+
+CREATE TABLE DOCTOR
+(
+	cc VARCHAR( 8 ) NOT NULL PRIMARY KEY,
+	name VARCHAR( 20 ) NOT NULL,
+	birthDate DATE NOT NULL
+)
+;
+
+CREATE TABLE PATIENT
+(
+	cc VARCHAR( 8 ) NOT NULL PRIMARY KEY,
+	name VARCHAR( 20 ) NOT NULL,
+	birthDate DATE NOT NULL
+)
+;
+
+CREATE TABLE DISEASE
+(
+	id INT NOT NULL PRIMARY KEY,
+	diseaseName VARCHAR( 20 ) NOT NULL,
+	tearRate VARCHAR( 20 ) NOT NULL,
+	isAstigmatic BOOLEAN NOT NULL
+)
+;
+
+CREATE TABLE TREATS
+(
+	prescriptionDate DATE NOT NULL,
+	prescribedLenses VARCHAR( 20 ) NOT NULL,
+	age VARCHAR( 20 ) NOT NULL,
+	ccDoctor VARCHAR( 8 ) NOT NULL,
+	ccPatient VARCHAR( 8 ) NOT NULL,
+	diseaseId INT NOT NULL,
+	PRIMARY KEY ( prescriptionDate, ccDoctor, ccPatient ),
+	CONSTRAINT constraintCcDoctor FOREIGN KEY ( ccDoctor ) REFERENCES DOCTOR( cc ),
+	CONSTRAINT constraintCcPatient FOREIGN KEY ( ccPatient ) REFERENCES PATIENT( cc ),
+	CONSTRAINT constraintDiseaseId FOREIGN KEY ( diseaseId ) REFERENCES DISEASE( id )
+)
+;
