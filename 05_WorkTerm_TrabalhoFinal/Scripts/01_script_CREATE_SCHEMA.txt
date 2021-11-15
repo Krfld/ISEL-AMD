@@ -16,9 +16,9 @@ DROP TABLE IF EXISTS DISEASE;
 
 CREATE TABLE DOCTOR
 (
-	cc VARCHAR( 8 ) NOT NULL PRIMARY KEY,
-	name VARCHAR( 20 ) NOT NULL,
-	birthDate DATE NOT NULL
+	cc			VARCHAR( 8 )	NOT NULL	PRIMARY KEY,
+	name		VARCHAR( 20 )	NOT NULL,
+	birthDate	DATE			NOT NULL
 )
 ;
 
@@ -28,9 +28,9 @@ CREATE TABLE DOCTOR
 
 CREATE TABLE PATIENT
 (
-	cc VARCHAR( 8 ) NOT NULL PRIMARY KEY,
-	name VARCHAR( 20 ) NOT NULL,
-	birthDate DATE NOT NULL
+	cc			VARCHAR( 8 )	NOT NULL	PRIMARY KEY,
+	name		VARCHAR( 20 )	NOT NULL,
+	birthDate	DATE			NOT NULL
 )
 ;
 
@@ -40,10 +40,22 @@ CREATE TABLE PATIENT
 
 CREATE TABLE DISEASE
 (
-	id INT NOT NULL PRIMARY KEY,
-	diseaseName VARCHAR( 20 ) NOT NULL,
-	tearRate VARCHAR( 20 ) NOT NULL,
-	isAstigmatic BOOLEAN NOT NULL
+	id				INT			NOT NULL	PRIMARY KEY,
+	isMyope			BOOLEAN		NOT NULL,
+	isAstigmatic	BOOLEAN		NOT NULL,
+	isHypermetrope	BOOLEAN		NOT NULL
+)
+;
+
+-------------
+-- DIAGNOSTIC
+-------------
+
+CREATE TABLE DIAGNOSTIC
+(
+	id			INT				NOT NULL	PRIMARY KEY,
+	age			VARCHAR( 20 )	NOT NULL,
+	tearRate	VARCHAR( 20 )	NOT NULL
 )
 ;
 
@@ -53,15 +65,18 @@ CREATE TABLE DISEASE
 
 CREATE TABLE TREATS
 (
-	prescriptionDate DATE NOT NULL,
-	prescribedLenses VARCHAR( 20 ) NOT NULL,
-	age VARCHAR( 20 ) NOT NULL,
-	ccDoctor VARCHAR( 8 ) NOT NULL,
-	ccPatient VARCHAR( 8 ) NOT NULL,
-	diseaseId INT NOT NULL,
-	PRIMARY KEY ( prescriptionDate, ccDoctor, ccPatient ),
-	CONSTRAINT constraintCcDoctor FOREIGN KEY ( ccDoctor ) REFERENCES DOCTOR( cc ),
-	CONSTRAINT constraintCcPatient FOREIGN KEY ( ccPatient ) REFERENCES PATIENT( cc ),
-	CONSTRAINT constraintDiseaseId FOREIGN KEY ( diseaseId ) REFERENCES DISEASE( id )
+	prescriptionDate	DATE			NOT NULL,
+	prescribedLenses	VARCHAR( 20 )	NOT NULL,
+	diseaseId			INT				NOT NULL,
+	diagnosticId		INT				NOT NULL,
+	ccDoctor			VARCHAR( 8 )	NOT NULL,
+	ccPatient			VARCHAR( 8 )	NOT NULL,
+	
+	PRIMARY KEY( prescriptionDate, diseaseId, diagnosticId, ccDoctor, ccPatient ),
+	
+	CONSTRAINT constraintDiseaseId		FOREIGN KEY( diseaseId )		REFERENCES DISEASE( id ),
+	CONSTRAINT constraintDiagnosticId	FOREIGN KEY( diagnosticId )		REFERENCES DIAGNOSTIC( id ),
+	CONSTRAINT constraintCcDoctor		FOREIGN KEY( ccDoctor )			REFERENCES DOCTOR( cc ),
+	CONSTRAINT constraintCcPatient		FOREIGN KEY( ccPatient )		REFERENCES PATIENT( cc )
 )
 ;

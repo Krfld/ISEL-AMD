@@ -30,14 +30,70 @@ VALUES ( '', '', Date )
 -- DISEASE
 ----------
 
-INSERT INTO DISEASE( id, diseaseName, isAstigmatic, tearRate )
-VALUES ( #, '', bool, '' )
+INSERT INTO DISEASE( id, isMyope, isHypermetrope, isAstigmatic )
+VALUES ( 0, false, false, false )
+;
+
+INSERT INTO DISEASE( id, isMyope, isHypermetrope, isAstigmatic )
+VALUES ( 1, true, false, false )
+;
+
+INSERT INTO DISEASE( id, isMyope, isHypermetrope, isAstigmatic )
+VALUES ( 2, false, true, false )
+;
+
+INSERT INTO DISEASE( id, isMyope, isHypermetrope, isAstigmatic )
+VALUES ( 3, false, false, true )
+;
+
+INSERT INTO DISEASE( id, isMyope, isHypermetrope, isAstigmatic )
+VALUES ( 4, true, true, false )
+;
+
+INSERT INTO DISEASE( id, isMyope, isHypermetrope, isAstigmatic )
+VALUES ( 5, false, true, true )
+;
+
+INSERT INTO DISEASE( id, isMyope, isHypermetrope, isAstigmatic )
+VALUES ( 6, true, false, true )
+;
+
+INSERT INTO DISEASE( id, isMyope, isHypermetrope, isAstigmatic )
+VALUES ( 7, true, true, true )
+;
+
+-------------
+-- DIAGNOSTIC
+-------------
+
+INSERT INTO DIAGNOSTIC( id, age, tearRate )
+VALUES ( 1, 'young', 'reduced' )
+;
+
+INSERT INTO DIAGNOSTIC( id, age, tearRate )
+VALUES ( 2, 'young', 'normal' )
+;
+
+INSERT INTO DIAGNOSTIC( id, age, tearRate )
+VALUES ( 3, 'presbyopic', 'reduced' )
+;
+
+INSERT INTO DIAGNOSTIC( id, age, tearRate )
+VALUES ( 4, 'presbyopic', 'normal' )
+;
+
+INSERT INTO DIAGNOSTIC( id, age, tearRate )
+VALUES ( 5, 'pre-presbyopic', 'reduced' )
+;
+
+INSERT INTO DIAGNOSTIC( id, age, tearRate )
+VALUES ( 6, 'pre-presbyopic', 'normal' )
 ;
 
 ---------
 -- TREATS
 ---------
 
-INSERT INTO TREATS( prescriptionDate, age, prescribedLenses, ccDoctor, ccPatient, diseaseId )
-VALUES( Date, '', '', '', '', # )
+INSERT INTO TREATS( prescriptionDate, prescribedLenses, diseaseId, diagnosticId, ccDoctor, ccPatient )
+VALUES( Date, '', #, #, '', '' )
 ;
