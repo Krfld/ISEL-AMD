@@ -1,27 +1,14 @@
---#############
---# Paulo Trigo
---#############
-
-
---==============
--- DB connection
---==============
-\set dataBase db_operational
+\set dataBase fpa_db
 ;
 \set userName postgres
 ;
 \connect :dataBase :userName
 ;
---==========================
---==========================
-
 
 -- additional information about "client_encoding" in:
 -- http://www.postgresql.org/docs/9.6/static/multibyte.html
 \encoding WIN1250
 ;
-
-
 
 ---------------------------------
 DROP VIEW IF EXISTS v1_dataset;
