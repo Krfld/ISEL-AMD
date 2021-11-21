@@ -182,58 +182,70 @@ def show_conditionalProbability(dataset, H, E):
 def test():
     #fileName = "./_dataset/adult_sample"
     #fileName = "./_dataset/lenses"
-    fileName = "./_dataset/lenses_copy.tab"
+    #fileName = "./_dataset/lenses_copy.tab"
     #fileName = "./_dataset/lenses_with_missingValues"
-    #fileName = "./_dataset/lenses_fromLecture"
+    fileName = "./_dataset/lenses_fromLecture"
     dataset = load(fileName)
 
+    # print()
+    # aStr = ">> Percentage of missing values per variable <<"
+    # my_print(aStr)
+    # (variable_list, missingValue_list) = get_missingValuePercentage(dataset)
+    # for i in range(len(variable_list)):
+    #     print("%4.1f%s %s" % (missingValue_list[i], '%', variable_list[i].name))
+
+    # ---------------------
+    # 3 a)
+    # This function calculates the percentage of missing values per variable, this means,
+    # missing values / total number of values * 100
+    # ---------------------
+
+    # print()
+    # aStr = ">> Contingency Matrix <<"
+    # my_print(aStr)
+    # showAll_contingencyMatrix(dataset)
+
+    # ---------------------
+    # 3 b)
+    # The matrices on the output show the frequency of each alternative of the attribute for each type of lenses
+    # These frequencies will then be used to calculate the error of each type of the attribute in comparison to the total
+    # ---------------------
+
     print()
-    aStr = ">> Percentage of missing values per variable <<"
+    H = "lenses"  # "capital-gain"
+    E = "age"  # "y"
+    aStr = ">> P( %s | %s ) <<" % (H, E)
     my_print(aStr)
-    (variable_list, missingValue_list) = get_missingValuePercentage(dataset)
-    for i in range(len(variable_list)):
-        print("%4.1f%s %s" % (missingValue_list[i], '%', variable_list[i].name))
+    show_conditionalProbability(dataset, H, E)
 
-   #  print()
-   #  aStr = ">> Contingency Matrix <<"
-   #  my_print(aStr)
-   #  showAll_contingencyMatrix(dataset)
+    # print()
+    # H = "lenses"  # "native-country"
+    # E = "prescription"  # "y"
+    # aStr = ">> P( %s | %s ) <<" % (H, E)
+    # my_print(aStr)
+    # show_conditionalProbability(dataset, H, E)
 
-   #  print()
-   #  H = "lenses"  # "capital-gain"
-   #  E = "age"  # "y"
-   #  aStr = ">> P( %s | %s ) <<" % (H, E)
-   #  my_print(aStr)
-   #  show_conditionalProbability(dataset, H, E)
+    # print()
+    # the_feature = "prescription"  # "age"
+    # aStr = "(1R-approach) >>Error Matrix>> %s & %s <<" % (the_feature, dataset.domain.class_var)
+    # my_print(aStr)
+    # (classDomain, featureDomain, errorMatrix) = get_errorMatrix(dataset, the_feature)
+    # if(not (classDomain or featureDomain)):
+    #     return
 
-   #  print()
-   #  H = "lenses"  # "native-country"
-   #  E = "prescription"  # "y"
-   #  aStr = ">> P( %s | %s ) <<" % (H, E)
-   #  my_print(aStr)
-   #  show_conditionalProbability(dataset, H, E)
-
-   #  print()
-   #  the_feature = "prescription"  # "age"
-   #  aStr = "(1R-approach) >>Error Matrix>> %s & %s <<" % (the_feature, dataset.domain.class_var)
-   #  my_print(aStr)
-   #  (classDomain, featureDomain, errorMatrix) = get_errorMatrix(dataset, the_feature)
-   #  if(not (classDomain or featureDomain)):
-   #      return
-
-   #  print(classDomain)
-   #  print(featureDomain)
-   #  print(errorMatrix)
-   #  print()
-   #  print("-->> so, the rule, and error, for the {} feature are:".format(the_feature))
-   #  for feature in range(len(featureDomain)):
-   #      errorFeature = errorMatrix[:, feature]
-   #      errorMin = min(errorFeature)
-   #      errorMinIndex = errorFeature.tolist().index(errorMin)
-   #      featureValue = featureDomain[feature]
-   #      classValue = classDomain[errorMinIndex]
-   #      showStr = "(" + the_feature + ", " + featureValue + ", " + classValue + ") : "
-   #      print(showStr + "{:.3f}".format(errorMin))
+    # print(classDomain)
+    # print(featureDomain)
+    # print(errorMatrix)
+    # print()
+    # print("-->> so, the rule, and error, for the {} feature are:".format(the_feature))
+    # for feature in range(len(featureDomain)):
+    #     errorFeature = errorMatrix[:, feature]
+    #     errorMin = min(errorFeature)
+    #     errorMinIndex = errorFeature.tolist().index(errorMin)
+    #     featureValue = featureDomain[feature]
+    #     classValue = classDomain[errorMinIndex]
+    #     showStr = "(" + the_feature + ", " + featureValue + ", " + classValue + ") : "
+    #     print(showStr + "{:.3f}".format(errorMin))
 
 
 # _______________________________________________________________________________
