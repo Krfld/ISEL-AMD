@@ -218,34 +218,33 @@ def test():
     # my_print(aStr)
     # show_conditionalProbability(dataset, H, E)
 
-    print()
-    H = "lenses"  # "native-country"
-    E = "prescription"  # "y"
-    aStr = ">> P( %s | %s ) <<" % (H, E)
-    my_print(aStr)
-    show_conditionalProbability(dataset, H, E)
-
     # print()
-    # the_feature = "prescription"  # "age"
-    # aStr = "(1R-approach) >>Error Matrix>> %s & %s <<" % (the_feature, dataset.domain.class_var)
+    # H = "lenses"  # "native-country"
+    # E = "prescription"  # "y"
+    # aStr = ">> P( %s | %s ) <<" % (H, E)
     # my_print(aStr)
-    # (classDomain, featureDomain, errorMatrix) = get_errorMatrix(dataset, the_feature)
-    # if(not (classDomain or featureDomain)):
-    #     return
+    # show_conditionalProbability(dataset, H, E)
 
-    # print(classDomain)
-    # print(featureDomain)
-    # print(errorMatrix)
-    # print()
-    # print("-->> so, the rule, and error, for the {} feature are:".format(the_feature))
-    # for feature in range(len(featureDomain)):
-    #     errorFeature = errorMatrix[:, feature]
-    #     errorMin = min(errorFeature)
-    #     errorMinIndex = errorFeature.tolist().index(errorMin)
-    #     featureValue = featureDomain[feature]
-    #     classValue = classDomain[errorMinIndex]
-    #     showStr = "(" + the_feature + ", " + featureValue + ", " + classValue + ") : "
-    #     print(showStr + "{:.3f}".format(errorMin))
+    print()
+    the_feature = "prescription"  # "age"
+    aStr = "(1R-approach) >>Error Matrix>> %s & %s <<" % (the_feature, dataset.domain.class_var)
+    my_print(aStr)
+    (classDomain, featureDomain, errorMatrix) = get_errorMatrix(dataset, the_feature)
+    if(not (classDomain or featureDomain)):
+        return
+    print(classDomain)
+    print(featureDomain)
+    print(errorMatrix)
+    print()
+    print("-->> so, the rule, and error, for the {} feature are:".format(the_feature))
+    for feature in range(len(featureDomain)):
+        errorFeature = errorMatrix[:, feature]
+        errorMin = min(errorFeature)
+        errorMinIndex = errorFeature.tolist().index(errorMin)
+        featureValue = featureDomain[feature]
+        classValue = classDomain[errorMinIndex]
+        showStr = "(" + the_feature + ", " + featureValue + ", " + classValue + ") : "
+        print(showStr + "{:.3f}".format(errorMin))
 
 
 # _______________________________________________________________________________
