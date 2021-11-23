@@ -211,19 +211,19 @@ def test():
     # These frequencies will then be used to calculate the error of each type of the attribute in comparison to the total
     # ---------------------
 
-    print()
-    H = "lenses"  # "capital-gain"
-    E = "age"  # "y"
-    aStr = ">> P( %s | %s ) <<" % (H, E)
-    my_print(aStr)
-    show_conditionalProbability(dataset, H, E)
-
     # print()
-    # H = "lenses"  # "native-country"
-    # E = "prescription"  # "y"
+    # H = "lenses"  # "capital-gain"
+    # E = "age"  # "y"
     # aStr = ">> P( %s | %s ) <<" % (H, E)
     # my_print(aStr)
     # show_conditionalProbability(dataset, H, E)
+
+    print()
+    H = "lenses"  # "native-country"
+    E = "prescription"  # "y"
+    aStr = ">> P( %s | %s ) <<" % (H, E)
+    my_print(aStr)
+    show_conditionalProbability(dataset, H, E)
 
     # print()
     # the_feature = "prescription"  # "age"
