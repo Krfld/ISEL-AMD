@@ -182,7 +182,7 @@ def show_conditionalProbability(dataset, H, E):
 def test():
     #fileName = "./_dataset/adult_sample"
     #fileName = "./_dataset/lenses"
-    #fileName = "./_dataset/lenses_copy.tab"
+    #fileName = "./_dataset/lenses_copy"
     #fileName = "./_dataset/lenses_with_missingValues"
     fileName = "./_dataset/lenses_fromLecture"
     dataset = load(fileName)
