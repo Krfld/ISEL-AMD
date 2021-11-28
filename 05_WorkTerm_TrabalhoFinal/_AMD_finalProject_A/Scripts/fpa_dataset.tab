@@ -1,0 +1,15 @@
+age	tearrate	ismyope	isastigmatic	ishypermetrope	prescribedlenses
+discrete	discrete	discrete	discrete	discrete	discrete
+""	""	""	""	""	class
+young	normal	true	true	false	hard
+young	reduced	true	true	true	hard
+presbyopic	normal	true	false	false	none
+presbyopic	normal	false	true	false	soft
+presbyopic	reduced	true	true	true	hard
+presbyopic	reduced	false	true	false	soft
+presbyopic	reduced	false	true	false	soft
+pre-presbyopic	normal	true	false	false	none
+pre-presbyopic	normal	true	false	false	none
+pre-presbyopic	normal	false	false	false	none
+pre-presbyopic	reduced	false	false	false	none
+pre-presbyopic	reduced	true	false	true	soft

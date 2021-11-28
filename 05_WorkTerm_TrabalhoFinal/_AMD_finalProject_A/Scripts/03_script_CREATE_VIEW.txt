@@ -10,17 +10,25 @@
 \encoding WIN1250
 ;
 
----------------------------------
-DROP VIEW IF EXISTS v1_dataset;
-DROP VIEW IF EXISTS v1;
-DROP VIEW IF EXISTS v1_domain;
-DROP VIEW IF EXISTS v1_class;
-DROP VIEW IF EXISTS v2_dataset;
-DROP VIEW IF EXISTS v2_attrType;
----------------------------------
+DROP VIEW IF EXISTS fpa_3RowHeader;
+DROP VIEW IF EXISTS fpa_view;
 
+CREATE VIEW fpa_view ( age, tearRate, isMyope, isAstigmatic, isHypermetrope, prescribedLenses ) AS
+SELECT age, tearRate, isMyope, isAstigmatic, isHypermetrope, prescribedLenses
+FROM DIAGNOSTIC, DISEASE, TREATS
+WHERE diagnosticId = DIAGNOSTIC.id and diseaseId = DISEASE.id
+ORDER BY age DESC, tearRate ASC, prescribedLenses ASC
+;
 
+CREATE VIEW fpa_3RowHeader ( age, tearRate, isMyope, isAstigmatic, isHypermetrope, prescribedLenses ) AS
+SELECT 'discrete', 'discrete', 'discrete', 'discrete', 'discrete', 'discrete'
+UNION ALL
+SELECT '', '', '', '', '', 'class'
+UNION ALL
+SELECT age, tearRate, CAST(isMyope AS VARCHAR), CAST(isAstigmatic AS VARCHAR), CAST(isHypermetrope AS VARCHAR), CAST(prescribedLenses AS VARCHAR) FROM fpa_view
+;
 
+/*
 -- complete the following view in order to build
 -- the output data presented below at [OUT]
 CREATE VIEW v1( my_order, VC1, VC2, VC3 ) AS
@@ -58,7 +66,7 @@ SELECT 1, 'discrete', 'discrete', 'discrete'
 
 -- 3 c)
 
-SELECT my_order, VC1, CAST(VC2 AS CHAR), CAST(VC3 AS CHAR) FROM v1
+SELECT my_order, VC1, CAST(VC2 AS VARCHAR), CAST(VC3 AS VARCHAR) FROM v1
 UNION ALL
 SELECT my_order, VC1, VC2, VC3 FROM v1_domain
 ORDER BY my_order
@@ -67,7 +75,7 @@ ORDER BY my_order
 -- Follow the "practiceGuide.pdf" until arriving at this goal:
 -- create the "dataset view" compatible with the Orange "3-Row-Header" format
 CREATE VIEW v1_dataset( my_order, VC1, VC2, VC3 ) AS
-SELECT my_order, VC1, CAST(VC2 AS CHAR), CAST(VC3 AS CHAR) FROM v1
+SELECT my_order, VC1, CAST(VC2 AS VARCHAR), CAST(VC3 AS VARCHAR) FROM v1
 UNION ALL
 SELECT my_order, VC1, VC2, VC3 FROM v1_domain
 ORDER BY my_order
@@ -81,7 +89,7 @@ SELECT 2, '', '', 'class'
 
 -- 4 d)
 
-SELECT my_order, VC1, CAST(VC2 AS CHAR), CAST(VC3 AS CHAR) FROM v1
+SELECT my_order, VC1, CAST(VC2 AS VARCHAR), CAST(VC3 AS VARCHAR) FROM v1
 UNION ALL
 SELECT my_order, VC1, VC2, VC3 FROM v1_domain
 UNION ALL
@@ -92,7 +100,7 @@ ORDER BY my_order
 DROP VIEW IF EXISTS v1_dataset;
 
 CREATE VIEW v1_dataset( my_order, VC1, VC2, VC3 ) AS
-(SELECT my_order, VC1, CAST(VC2 AS CHAR), CAST(VC3 AS VARCHAR) FROM v1 ORDER BY VC1 DESC, VC3 ASC)
+(SELECT my_order, VC1, CAST(VC2 AS VARCHAR), CAST(VC3 AS VARCHAR) FROM v1 ORDER BY VC1 DESC, VC3 ASC)
 UNION ALL
 (SELECT my_order, VC1, VC2, VC3 FROM v1_domain)
 UNION ALL
@@ -118,7 +126,7 @@ SELECT 1, 'D#VC1', 'D#VC2', 'Dc#VC3'
 -- Follow the "practiceGuide.pdf" until arriving at this goal:
 -- create the "dataset view" compatible with the Orange "Header-with-Attribute-Type" format
 CREATE VIEW v2_dataset( my_order, VC1, VC2, VC3 ) AS
-(SELECT my_order, VC1, CAST(VC2 AS CHAR), CAST(VC3 AS VARCHAR) FROM v1 ORDER BY VC1 DESC, VC3 ASC)
+(SELECT my_order, VC1, CAST(VC2 AS VARCHAR), CAST(VC3 AS VARCHAR) FROM v1 ORDER BY VC1 DESC, VC3 ASC)
 UNION ALL
 (SELECT my_order, VC1, VC2, VC3 FROM v2_attrType)
 ORDER BY my_order
@@ -131,5 +139,5 @@ TO STDOUT
 WITH ( FORMAT CSV, DELIMITER E'\t' )
 ;
 \o :STDOUT
-
+*/
 

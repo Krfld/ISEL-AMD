@@ -1,0 +1,17 @@
+\set dataBase fpa_db
+;
+\set userName postgres
+;
+\connect :dataBase :userName
+;
+
+\set filePath 'fpa_dataset.tab'
+
+\o :filePath
+
+COPY ( SELECT age, tearRate, isMyope, isAstigmatic, isHypermetrope, prescribedLenses FROM fpa_3RowHeader )
+TO STDOUT
+WITH ( FORMAT CSV, HEADER TRUE, DELIMITER E'\t' )
+;
+
+--\o :STDOUT
