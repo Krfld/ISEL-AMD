@@ -190,14 +190,14 @@ def test():
     for i in range(len(variable_list)):
         print("%4.1f%s %s" % (missingValue_list[i], '%', variable_list[i].name))
 
-    print()
-    aStr = ">> Contingency Matrix <<"
-    my_print(aStr)
-    showAll_contingencyMatrix(dataset)
+    # print()
+    # aStr = ">> Contingency Matrix <<"
+    # my_print(aStr)
+    # showAll_contingencyMatrix(dataset)
 
     print()
-    H = "prescribedlenses"  # "capital-gain"
-    E = "age"  # "y"
+    H = "prescribedlenses"
+    E = "age"
     aStr = ">> P( %s | %s ) <<" % (H, E)
     my_print(aStr)
     show_conditionalProbability(dataset, H, E)
