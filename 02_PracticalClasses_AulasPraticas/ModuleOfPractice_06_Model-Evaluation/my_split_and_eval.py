@@ -17,6 +17,7 @@
 # _______________
 # library import
 # _______________
+import numpy
 from pandas import read_csv, DataFrame
 from numpy import array, set_printoptions
 
@@ -183,7 +184,7 @@ def fold_split(k_folds, seed=None):
     # - k consecutive folds (k_folds parameter)
     # - each fold used once as validation; the k-1 remaining folds as training dataset
     # - shuffle=True, so dataset is shuffled (random split) before building the folds
-    tt_split_indexes = None  # <your-code-here>
+    tt_split_indexes = KFold(n_splits=k_folds, shuffle=True, random_state=seed)
     return tt_split_indexes
 
 
@@ -193,7 +194,7 @@ def stratified_fold_split(k_folds, seed=None):
     # - each fold used once as validation; the k-1 remaining folds as training dataset
     # - shuffle=True, so dataset is shuffled (random split) before building the folds
     # - datasets preserve the percentage of samples for each class
-    tt_split_indexes = None  # <your-code-here>
+    tt_split_indexes = StratifiedKFold(n_splits=k_folds, shuffle=True, random_state=seed)
     return tt_split_indexes
 
 
@@ -202,7 +203,7 @@ def repeated_fold_split(k_folds, n_repeat, seed=None):
     # - k consecutive folds (k_folds parameter)
     # - each fold used once as validation; the k-1 remaining folds as training dataset
     # - repeats (n_repeat times) KFold with different randomization in each repetition
-    tt_split_indexes = None  # <your-code-here>
+    tt_split_indexes = RepeatedKFold(n_splits=k_folds, n_repeats=n_repeat, random_state=seed)
     return tt_split_indexes
 
 
@@ -211,7 +212,7 @@ def repeated_stratified_fold_split(k_folds, n_repeat, seed=None):
     # - k consecutive folds (k_folds parameter)
     # - each fold used once as validation; the k-1 remaining folds as training dataset
     # - repeats (n_repeat times) StratifiedKFold with different randomization in each repetition
-    tt_split_indexes = None  # <your-code-here>
+    tt_split_indexes = RepeatedStratifiedKFold(n_splits=k_folds, n_repeats=n_repeat, random_state=seed)
     return tt_split_indexes
 
 
@@ -220,7 +221,7 @@ def leave_one_out():
     # - each sample is used once as a test set (singleton), and
     # - the remaining samples form the training set
     # - same as KFold(n_splits=n), where n is number of dataset samples
-    tt_split_indexes = None  # <your-code-here>
+    tt_split_indexes = LeaveOneOut()
     return tt_split_indexes
 
 
@@ -229,7 +230,7 @@ def leave_p_out(p):
     # - testing on all distinct samples of size p, and
     # - the remaining n-p samples form the training set in each iteration
     # - NOT same as KFold(n_splits=n_samples//p), which creates non-overlapping test sets
-    tt_split_indexes = None  # <your-code-here>
+    tt_split_indexes = LeavePOut(p=p)
     return tt_split_indexes
 
 
@@ -292,25 +293,32 @@ def score_recipe(classifier, X, y, tt_split_indexes,
 # - classification techniques
 # - score metrics
 # ______________________________________________________________________________
-seed = 5  # None #used by random generator (value is integer or None)
+seed = None  # used by random generator (value is integer or None)
 
 # _________________________
 # train|test split methods
 # <your-code-here>
+
+# EX 3
+# c) Stratified mantém a proporção de classes no dataset
+# d) repeated_holdout é o mesmo que o holdout mas repete um número de vezes
+
 list_func_tt_split = \
     [
-        #    (holdout, (1.0/3.0, seed)),
-        #    (stratified_holdout, (1.0/3.0, seed)),
-        #    (repeated_holdout, (1.0/3.0, 2, seed)),
-        #    (repeated_stratified_holdout, (1.0/3.0, 2, seed)),
-        #    (fold_split, (3, seed)),
-        #    (stratified_fold_split, (3, seed)),
-        #    (repeated_fold_split, (3, 2, seed)),
-        #    (repeated_stratified_fold_split, (3, 2, seed)),
-        #    (leave_one_out, ()),
-        #    (leave_p_out, (2, )),
-        #    (bootstrap_split_once, (seed, )),
-        #    (bootstrap_split_repeated, (2, seed))
+        # (holdout, (1.0/2.0, seed)),
+        # (stratified_holdout, (1.0/2.0, seed)),
+        # (repeated_holdout, (1.0/2.0, 2, seed)),
+
+        # (repeated_stratified_holdout, (1.0/3.0, 2, seed)),
+        # (fold_split, (3, seed)),
+        # (stratified_fold_split, (3, seed)),
+        # (repeated_fold_split, (3, 2, seed)),
+        # (repeated_stratified_fold_split, (3, 2, seed)),
+        # (leave_one_out, ()),
+        # (leave_p_out, (2, )),
+
+        # (bootstrap_split_once, (seed, )),
+        # (bootstrap_split_repeated, (2, seed))
     ]
 
 
@@ -374,45 +382,21 @@ list_score_metric = \
 fileName = "pima-indians-diabetes.data.csv"
 featureName = ['preg', 'plas', 'pres', 'skin', 'test', 'mass', 'pedi', 'age', 'class']
 
-# <your-code-here>
-
 # EX 2
-# b) func_datasetLoader = None
-# d) def simple_dataset(): return read_csv(fileName, names=featureName)
 
-# EX 3
 # b)
-# def simple_dataset():
-#     dataset = read_csv(fileName, names=featureName)
-#     trainRatio = 0.5
-#     return dataset.iloc[:int(len(dataset) * trainRatio)]
+func_datasetLoader = None
 
-# c)
-
-
-def simple_dataset():
-    dataset = read_csv(fileName, names=featureName)
-    trainRatio = 0.5
-    #dataset = dataset.sort_values(by=['class'])
-
-    class0 = dataset[dataset['class'] == 0]
-    class1 = dataset[dataset['class'] == 1]
-
-    # append half of class 0 and class 1
-
-    print(class1)
-    return dataset
-
-
-func_datasetLoader = simple_dataset  # None (if we want to load the "fileName)
-
+# d)
+# func_datasetLoader = simple_dataset  # None (if we want to load the "fileName)
 
 # ______________________________________________________________________________
 # ______________________________________________________________________________
+
+
 def main():
     D = load_dataset(fileName, featureName=featureName,
                      func_datasetLoader=func_datasetLoader)
-    return
     show_data(D)
 
     for (f_tt_split, args_tt_split) in list_func_tt_split:
