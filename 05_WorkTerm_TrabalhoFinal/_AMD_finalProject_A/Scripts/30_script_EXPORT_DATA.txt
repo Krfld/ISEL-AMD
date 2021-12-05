@@ -12,7 +12,17 @@
 \set filePath 'fpa_dataset.tab'
 \o :filePath
 
-COPY ( SELECT age, tearRate AS tear_rate, isMyope, isAstigmatic, isHypermetrope, prescribedLenses AS lenses FROM fpa_3RowHeader )
+COPY
+(
+	SELECT
+		age,
+		tearRate AS tear_rate,
+		isMyope,
+		isAstigmatic,
+		isHypermetrope,
+		prescribedLenses AS lenses
+	FROM fpa_3RowHeader
+)
 TO STDOUT
 WITH ( FORMAT CSV, HEADER TRUE, DELIMITER E'\t' )
 ;
@@ -24,7 +34,17 @@ WITH ( FORMAT CSV, HEADER TRUE, DELIMITER E'\t' )
 \set filePath 'fpa_dataset.csv'
 \o :filePath
 
-COPY ( SELECT age, tearRate AS tear_rate, CAST(isMyope AS VARCHAR), CAST(isAstigmatic AS VARCHAR), CAST(isHypermetrope AS VARCHAR), prescribedLenses AS lenses FROM fpa_view )
+COPY
+(
+	SELECT
+		age,
+		tearRate AS tear_rate,
+		CAST(isMyope AS VARCHAR),
+		CAST(isAstigmatic AS VARCHAR),
+		CAST(isHypermetrope AS VARCHAR),
+		prescribedLenses AS lenses
+	FROM fpa_view
+)
 TO STDOUT
 WITH ( FORMAT CSV )
 ;
