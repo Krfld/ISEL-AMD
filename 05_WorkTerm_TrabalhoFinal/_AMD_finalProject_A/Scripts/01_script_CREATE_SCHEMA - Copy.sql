@@ -20,8 +20,7 @@ CREATE TABLE DOCTOR
 	cc			VARCHAR( 8 )	NOT NULL	PRIMARY KEY,
 	name		VARCHAR( 50 )	NOT NULL,
 	birthDate	DATE			NOT NULL
-)
-;
+);
 
 ----------
 -- PATIENT
@@ -32,8 +31,7 @@ CREATE TABLE PATIENT
 	cc			VARCHAR( 8 )	NOT NULL	PRIMARY KEY,
 	name		VARCHAR( 50 )	NOT NULL,
 	birthDate	DATE			NOT NULL
-)
-;
+);
 
 ----------
 -- DISEASE
@@ -45,8 +43,7 @@ CREATE TABLE DISEASE
 	isMyope			BOOLEAN		NOT NULL,
 	isAstigmatic	BOOLEAN		NOT NULL,
 	isHypermetrope	BOOLEAN		NOT NULL
-)
-;
+);
 
 -------------
 -- DIAGNOSTIC
@@ -57,8 +54,7 @@ CREATE TABLE DIAGNOSTIC
 	id			INT				NOT NULL	PRIMARY KEY,
 	age			VARCHAR( 20 )	NOT NULL,
 	tearRate	VARCHAR( 20 )	NOT NULL
-)
-;
+);
 
 ---------
 -- TREATS
@@ -79,5 +75,4 @@ CREATE TABLE TREATS
 	CONSTRAINT constraintDiagnosticId	FOREIGN KEY( diagnosticId )		REFERENCES DIAGNOSTIC( id ),
 	CONSTRAINT constraintCcDoctor		FOREIGN KEY( ccDoctor )			REFERENCES DOCTOR( cc ),
 	CONSTRAINT constraintCcPatient		FOREIGN KEY( ccPatient )		REFERENCES PATIENT( cc )
-)
-;
+);
