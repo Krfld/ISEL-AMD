@@ -1,3 +1,4 @@
+# %%
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
@@ -257,7 +258,6 @@ def bootstrap_split_repeated(n_repeat, seed=None):
 def train_test_split_recipe(D, func_tt_split, *args_tt_split):
     # split the dataset into features, X, and class, y, attributes
     (X, y) = split_dataset_Xy(D)
-
     # get train and test (tt) split indexes
     tt_split_indexes = func_tt_split(*args_tt_split)
     return (X, y, tt_split_indexes)
@@ -320,7 +320,7 @@ list_func_tt_split = \
 list_func_classifier = \
     [
         # (GaussianNB, ()),
-        (DecisionTreeClassifier, ())
+        # (DecisionTreeClassifier, ())
     ]
 
 
@@ -373,7 +373,7 @@ list_score_metric = \
 fileName = "./Scripts/fpa_dataset.csv"
 featureName = ['age', 'tearRate', 'isMyope', 'isAstigmatic', 'isHypermetrope', 'prescribedLenses']
 
-func_datasetLoader = None  # None (if we want to load the "fileName)
+func_datasetLoader = simple_dataset  # None (if we want to load the "fileName)
 
 # ______________________________________________________________________________
 # ______________________________________________________________________________

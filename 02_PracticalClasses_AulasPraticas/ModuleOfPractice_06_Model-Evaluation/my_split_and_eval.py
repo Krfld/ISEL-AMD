@@ -398,9 +398,9 @@ featureName = ['preg', 'plas', 'pres', 'skin', 'test', 'mass', 'pedi', 'age', 'c
 
 # EX 2
 # b)
-# func_datasetLoader = None
+func_datasetLoader = None
 # d)
-func_datasetLoader = simple_dataset  # None (if we want to load the "fileName)
+# func_datasetLoader = simple_dataset  # None (if we want to load the "fileName)
 
 # ______________________________________________________________________________
 # ______________________________________________________________________________

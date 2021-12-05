@@ -1,3 +1,4 @@
+# %%
 # to use accented characters in the code
 # -*- coding: cp1252 -*-
 # ===============================
@@ -177,6 +178,7 @@ def show_conditionalProbability(dataset, H, E):
             print("  P({} | {}) = {:.3f}".format(h, e, P_h_e))
 
 
+# %%
 # _______________________________________________________________________________
 # implementation of some test cases
 def test():
@@ -231,3 +233,5 @@ def test():
 # the main of this module (in case this module is imported from another module)
 if __name__ == "__main__":
     test()
+
+# %%
