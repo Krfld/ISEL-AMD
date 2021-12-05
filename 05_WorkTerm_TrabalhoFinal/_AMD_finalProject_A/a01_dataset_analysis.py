@@ -180,15 +180,16 @@ def show_conditionalProbability(dataset, H, E):
 # _______________________________________________________________________________
 # implementation of some test cases
 def test():
-    fileName = "./Scripts/fpa_dataset"
+    # fileName = "./Scripts/fpa_dataset"
+    fileName = "./Scripts/lenses_fromLecture"
     dataset = load(fileName)
 
-    print()
-    aStr = ">> Percentage of missing values per variable <<"
-    my_print(aStr)
-    (variable_list, missingValue_list) = get_missingValuePercentage(dataset)
-    for i in range(len(variable_list)):
-        print("%4.1f%s %s" % (missingValue_list[i], '%', variable_list[i].name))
+    # print()
+    # aStr = ">> Percentage of missing values per variable <<"
+    # my_print(aStr)
+    # (variable_list, missingValue_list) = get_missingValuePercentage(dataset)
+    # for i in range(len(variable_list)):
+    #     print("%4.1f%s %s" % (missingValue_list[i], '%', variable_list[i].name))
 
     # print()
     # aStr = ">> Contingency Matrix <<"
@@ -196,11 +197,13 @@ def test():
     # showAll_contingencyMatrix(dataset)
 
     print()
-    H = "prescribedlenses"
+    H = "lenses"
     E = "age"
     aStr = ">> P( %s | %s ) <<" % (H, E)
     my_print(aStr)
     show_conditionalProbability(dataset, H, E)
+
+    return
 
     print()
     the_feature = "age"  # ! Lowest error feature

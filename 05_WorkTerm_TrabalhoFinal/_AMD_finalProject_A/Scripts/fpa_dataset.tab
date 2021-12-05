@@ -1,4 +1,4 @@
-age	tearrate	ismyope	isastigmatic	ishypermetrope	prescribedlenses
+age	tear_rate	ismyope	isastigmatic	ishypermetrope	lenses
 discrete	discrete	discrete	discrete	discrete	discrete
 ""	""	""	""	""	class
 young	normal	true	true	false	hard
