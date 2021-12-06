@@ -201,8 +201,8 @@ def getLowestErrorFeature(dataset):
 # _______________________________________________________________________________
 # implementation of some test cases
 def test():
-    fileName = "./Scripts/fpa_dataset"
     # fileName = "./Scripts/lenses_fromLecture"
+    fileName = "./Scripts/fpa_dataset"
     dataset = load(fileName)
 
     # print()
@@ -217,15 +217,16 @@ def test():
     # my_print(aStr)
     # showAll_contingencyMatrix(dataset)
 
-    # print()
-    # H = "lenses"
-    # E = "age"
-    # aStr = ">> P( %s | %s ) <<" % (H, E)
-    # my_print(aStr)
-    # show_conditionalProbability(dataset, H, E)
+    the_feature = getLowestErrorFeature(dataset)
 
     print()
-    the_feature = getLowestErrorFeature(dataset)
+    H = "lenses"
+    E = the_feature
+    aStr = ">> P( %s | %s ) <<" % (H, E)
+    my_print(aStr)
+    show_conditionalProbability(dataset, H, E)
+
+    print()
     aStr = "(1R-approach) >>Error Matrix>> %s & %s <<" % (the_feature, dataset.domain.class_var)
     my_print(aStr)
     (classDomain, featureDomain, errorMatrix) = get_errorMatrix(dataset, the_feature)
