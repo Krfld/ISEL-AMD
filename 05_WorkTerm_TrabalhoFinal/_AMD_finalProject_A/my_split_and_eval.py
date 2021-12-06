@@ -150,8 +150,7 @@ def split_dataset_Xy(D):
 def holdout(test_size, seed=None):
     # yields indices to random split once the data into:
     # - one train dataset and one test dataset
-    tt_split_indexes = ShuffleSplit(n_splits=1,
-                                    test_size=test_size, random_state=seed)
+    tt_split_indexes = ShuffleSplit(n_splits=1, test_size=test_size, random_state=seed)
     return tt_split_indexes
 
 
@@ -159,16 +158,14 @@ def stratified_holdout(test_size, seed=None):
     # yields indices to random split of data into:
     # - one train dataset and one test dataset
     # - datasets preserve the percentage of samples for each class
-    tt_split_indexes = StratifiedShuffleSplit(n_splits=1,
-                                              test_size=test_size, random_state=seed)
+    tt_split_indexes = StratifiedShuffleSplit(n_splits=1, test_size=test_size, random_state=seed)
     return tt_split_indexes
 
 
 def repeated_holdout(test_size, n_repeat, seed=None):
     # yields indices to random split of data into:
     # - a given number (n_repeat) of training and test datasets
-    tt_split_indexes = ShuffleSplit(n_splits=n_repeat,
-                                    test_size=test_size, random_state=seed)
+    tt_split_indexes = ShuffleSplit(n_splits=n_repeat, test_size=test_size, random_state=seed)
     return tt_split_indexes
 
 
@@ -176,8 +173,7 @@ def repeated_stratified_holdout(test_size, n_repeat, seed=None):
     # yields indices to random split of data into:
     # - a given number (n_repeat) of training and test datasets
     # - datasets preserve the percentage of samples for each class
-    tt_split_indexes = StratifiedShuffleSplit(n_splits=n_repeat,
-                                              test_size=test_size, random_state=seed)
+    tt_split_indexes = StratifiedShuffleSplit(n_splits=n_repeat, test_size=test_size, random_state=seed)
     return tt_split_indexes
 
 
@@ -275,7 +271,7 @@ def score_recipe(classifier, X, y, tt_split_indexes,
         X_test,  y_test = X[test_index],  y[test_index]
 
         # fit (build) model using classifier, X_train and y_train (training dataset)
-        classifier.fit(X_train, y_train)
+        classifier.fit(X_train, y_train)  # ! Error
 
         # predict using the model and X_test (testing dataset)
         y_predict = classifier.predict(X_test)
@@ -300,8 +296,8 @@ seed = 5  # used by random generator (value is integer or None)
 # train|test split methods
 list_func_tt_split = \
     [
-        (holdout, (1.0/3.0, seed)),
-        # (stratified_holdout, (1.0/3.0, seed)),
+        # (holdout, (1.0/3.0, seed)),
+        (stratified_holdout, (1.0/3.0, seed)),
         # (repeated_holdout, (1.0/3.0, 2, seed)),
         # (repeated_stratified_holdout, (1.0/3.0, 2, seed)),
         # (fold_split, (3, seed)),
@@ -319,8 +315,8 @@ list_func_tt_split = \
 # classification techniques
 list_func_classifier = \
     [
-        # (GaussianNB, ()),
-        # (DecisionTreeClassifier, ())
+        # (GaussianNB, ()), # NB
+        (DecisionTreeClassifier, ())  # ID3
     ]
 
 
@@ -329,10 +325,10 @@ list_func_classifier = \
 list_score_metric = \
     [
         (accuracy_score, {}),
-        (precision_score, {"average": "weighted"}),  # macro #micro #weighted
-        (recall_score, {"average": "weighted"}),  # macro #micro #weighted
-        (f1_score, {"average": "weighted"}),  # macro #micro #weighted
-        (cohen_kappa_score, {}),
+        # (precision_score, {"average": "weighted"}),  # macro #micro #weighted
+        # (recall_score, {"average": "weighted"}),  # macro #micro #weighted
+        # (f1_score, {"average": "weighted"}),  # macro #micro #weighted
+        # (cohen_kappa_score, {}),
     ]
 
 # ACCURACY:
@@ -373,7 +369,7 @@ list_score_metric = \
 fileName = "./Scripts/fpa_dataset.csv"
 featureName = ['age', 'tearRate', 'isMyope', 'isAstigmatic', 'isHypermetrope', 'prescribedLenses']
 
-func_datasetLoader = simple_dataset  # None (if we want to load the "fileName)
+func_datasetLoader = None  # None (if we want to load the "fileName)
 
 # ______________________________________________________________________________
 # ______________________________________________________________________________
@@ -381,7 +377,8 @@ func_datasetLoader = simple_dataset  # None (if we want to load the "fileName)
 
 def main():
     D = load_dataset(fileName, featureName=featureName, func_datasetLoader=func_datasetLoader)
-    show_data(D, 25)
+    show_data(D)
+    #! Try LabelEncoder
 
     for (f_tt_split, args_tt_split) in list_func_tt_split:
         (X, y, tt_split_indexes) = train_test_split_recipe(D,

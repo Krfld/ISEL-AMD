@@ -1,4 +1,3 @@
-# %%
 # to use accented characters in the code
 # -*- coding: cp1252 -*-
 # ===============================
@@ -178,12 +177,32 @@ def show_conditionalProbability(dataset, H, E):
             print("  P({} | {}) = {:.3f}".format(h, e, P_h_e))
 
 
-# %%
+def getLowestErrorFeature(dataset):
+    errors = {}
+
+    feature_list, the_class = dataset.domain.attributes, dataset.domain.class_var
+    for feature in feature_list:
+        (rowDomain, colDomain, cMatrix) = get_contingencyMatrix(dataset, feature, the_class)
+
+        valueError = 0
+        errors[feature.name] = 0
+        for row in rowDomain:
+            freqs = cMatrix[rowDomain.index(row), :]
+            rowTotal = sum(freqs)
+            valueError += rowTotal - max(freqs)
+            errors[feature.name] += rowTotal
+        errors[feature.name] = valueError / errors[feature.name]
+
+    for feature in errors:
+        if(errors[feature] == min(errors.values())):
+            return feature
+
+
 # _______________________________________________________________________________
 # implementation of some test cases
 def test():
-    # fileName = "./Scripts/fpa_dataset"
-    fileName = "./Scripts/lenses_fromLecture"
+    fileName = "./Scripts/fpa_dataset"
+    # fileName = "./Scripts/lenses_fromLecture"
     dataset = load(fileName)
 
     # print()
@@ -198,17 +217,15 @@ def test():
     # my_print(aStr)
     # showAll_contingencyMatrix(dataset)
 
-    print()
-    H = "lenses"
-    E = "age"
-    aStr = ">> P( %s | %s ) <<" % (H, E)
-    my_print(aStr)
-    show_conditionalProbability(dataset, H, E)
-
-    return
+    # print()
+    # H = "lenses"
+    # E = "age"
+    # aStr = ">> P( %s | %s ) <<" % (H, E)
+    # my_print(aStr)
+    # show_conditionalProbability(dataset, H, E)
 
     print()
-    the_feature = "age"  # ! Lowest error feature
+    the_feature = getLowestErrorFeature(dataset)
     aStr = "(1R-approach) >>Error Matrix>> %s & %s <<" % (the_feature, dataset.domain.class_var)
     my_print(aStr)
     (classDomain, featureDomain, errorMatrix) = get_errorMatrix(dataset, the_feature)
@@ -233,5 +250,3 @@ def test():
 # the main of this module (in case this module is imported from another module)
 if __name__ == "__main__":
     test()
-
-# %%
