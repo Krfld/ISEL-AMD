@@ -200,8 +200,8 @@ def getLowestErrorFeature(dataset):
 # _______________________________________________________________________________
 # implementation of some test cases
 def test():
-    # fileName = "./Scripts/lenses_fromLecture"
-    fileName = "./Scripts/fpa_dataset"
+    # fileName = "./datasets/lenses_fromLecture"
+    fileName = "./datasets/fpa_dataset"
     dataset = load(fileName)
 
     # print()

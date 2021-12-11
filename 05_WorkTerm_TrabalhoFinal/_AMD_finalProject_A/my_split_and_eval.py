@@ -43,7 +43,7 @@ import warnings
 # - "no predicted samples" (thrown by score_precision and f_score metrics)
 # - "no true samples" (thrown by score_recall and f_score metrics)
 
-warnings.filterwarnings("always", category=UndefinedMetricWarning)  # use "always" or "ignore"
+warnings.filterwarnings("ignore", category=UndefinedMetricWarning)  # use "always" or "ignore"
 
 # utility to check the version of each library
 # import pandas, numpy, sklearn
@@ -297,9 +297,9 @@ seed = 5  # used by random generator (value is integer or None)
 list_func_tt_split = \
     [
         # (holdout, (1.0/3.0, seed)),
-        (stratified_holdout, (1.0/3.0, seed)),
+        # (stratified_holdout, (1.0/3.0, seed)),
         # (repeated_holdout, (1.0/3.0, 2, seed)),
-        # (repeated_stratified_holdout, (1.0/3.0, 2, seed)),
+        (repeated_stratified_holdout, (1.0/3.0, 10, seed)),
         # (fold_split, (3, seed)),
         # (stratified_fold_split, (3, seed)),
         # (repeated_fold_split, (3, 2, seed)),
@@ -315,8 +315,8 @@ list_func_tt_split = \
 # classification techniques
 list_func_classifier = \
     [
-        # (GaussianNB, ()), # NB
-        (DecisionTreeClassifier, ())  # ID3
+        (GaussianNB, ()),  # NB
+        # (DecisionTreeClassifier, ())  # ID3
     ]
 
 
@@ -325,10 +325,10 @@ list_func_classifier = \
 list_score_metric = \
     [
         (accuracy_score, {}),
-        (precision_score, {"average": "weighted"}),  # macro #micro #weighted
-        (recall_score, {"average": "weighted"}),  # macro #micro #weighted
-        (f1_score, {"average": "weighted"}),  # macro #micro #weighted
-        (cohen_kappa_score, {}),
+        # (precision_score, {"average": "weighted"}),  # macro #micro #weighted
+        # (recall_score, {"average": "weighted"}),  # macro #micro #weighted
+        # (f1_score, {"average": "weighted"}),  # macro #micro #weighted
+        # (cohen_kappa_score, {}),
     ]
 
 # ACCURACY:
@@ -366,7 +366,7 @@ list_score_metric = \
 # and
 # - a function that returns a dataset (or None)
 # _____________________________________________________
-fileName = "./Scripts/fpa_dataset.csv"
+fileName = "./datasets/fpa_dataset.csv"
 featureName = ['age', 'tearRate', 'isMyope', 'isAstigmatic', 'isHypermetrope', 'prescribedLenses']
 
 func_datasetLoader = None  # None (if we want to load the "fileName) # simple_dataset
@@ -378,11 +378,10 @@ func_datasetLoader = None  # None (if we want to load the "fileName) # simple_da
 def main():
     D = load_dataset(fileName, featureName=featureName, func_datasetLoader=func_datasetLoader)
     show_data(D)
-    # ? Needs to trasnform?
+    #! Needs to trasnform
 
     for (f_tt_split, args_tt_split) in list_func_tt_split:
-        (X, y, tt_split_indexes) = train_test_split_recipe(D,
-                                                           f_tt_split, *args_tt_split)
+        (X, y, tt_split_indexes) = train_test_split_recipe(D, f_tt_split, *args_tt_split)
         show_function_name("train_test_split:", f_tt_split)
         show_train_test_split(X, y, tt_split_indexes, numFirstRows=10)
 
@@ -391,8 +390,7 @@ def main():
             show_function_name("classifier:", f_classifier)
 
             for (f_score, keyword_args_score) in list_score_metric:
-                score_all = score_recipe(classifier, X, y, tt_split_indexes,
-                                         f_score, **keyword_args_score)
+                score_all = score_recipe(classifier, X, y, tt_split_indexes, f_score, **keyword_args_score)
                 show_function_name("score_method:", f_score)
                 show_score(score_all)
 
