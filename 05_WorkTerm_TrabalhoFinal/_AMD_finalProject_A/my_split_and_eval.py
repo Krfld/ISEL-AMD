@@ -117,12 +117,13 @@ def simple_dataset():
     # print( type( data ) )
     return data
 
-
 # ____________________________________
 # Data-Split & Score Recipe Functions
 # ____________________________________
 # load dataset
 # either from the fileName or by executing the func_datasetLoader function
+
+
 def load_dataset(fileName, featureName=None, func_datasetLoader=None):
     # see if is to load from a function (by executing func_datasetLoader)
     if func_datasetLoader:
@@ -262,8 +263,7 @@ def train_test_split_recipe(D, func_tt_split, *args_tt_split):
 # _________________________
 # the general Score Recipe
 # _________________________
-def score_recipe(classifier, X, y, tt_split_indexes,
-                 f_score, **keyword_args_score):
+def score_recipe(classifier, X, y, tt_split_indexes, f_score, **keyword_args_score):
     score_all_list = list()
 
     for (train_index, test_index) in tt_split_indexes.split(X, y):
@@ -271,7 +271,7 @@ def score_recipe(classifier, X, y, tt_split_indexes,
         X_test,  y_test = X[test_index],  y[test_index]
 
         # fit (build) model using classifier, X_train and y_train (training dataset)
-        classifier.fit(X_train, y_train)  # ! Error
+        classifier.fit(X_train, y_train)
 
         # predict using the model and X_test (testing dataset)
         y_predict = classifier.predict(X_test)
@@ -284,6 +284,7 @@ def score_recipe(classifier, X, y, tt_split_indexes,
     return score_all_list
 
 
+'''
 # ______________________________________________________________________________
 # lists to define the:
 # - train|test split methods
@@ -315,7 +316,7 @@ list_func_tt_split = \
 # classification techniques
 list_func_classifier = \
     [
-        (GaussianNB, ()),  # NB
+        # (GaussianNB, ()),  # NB
         # (DecisionTreeClassifier, ())  # ID3
     ]
 
@@ -378,7 +379,6 @@ func_datasetLoader = None  # None (if we want to load the "fileName) # simple_da
 def main():
     D = load_dataset(fileName, featureName=featureName, func_datasetLoader=func_datasetLoader)
     show_data(D)
-    #! Needs to trasnform
 
     for (f_tt_split, args_tt_split) in list_func_tt_split:
         (X, y, tt_split_indexes) = train_test_split_recipe(D, f_tt_split, *args_tt_split)
@@ -401,3 +401,4 @@ def main():
 # The "main" of this module (in case it was not loaded from another module)
 if __name__ == "__main__":
     main()
+'''
