@@ -49,6 +49,7 @@ def getPatient():
         else:
             validInput = True
 
+    print()
     return age, tearRate, isMyope, isAstigmatic, isHypermetrope
 
 
@@ -58,7 +59,7 @@ def printLenses(lenses=None):
     if lenses == 'none':
         print('The patient does not need to wear lenses')
     else:
-        print(f'The patient needs to wear {lenses} lenses')
+        print(f'The patient needs to wear \'{lenses}\' lenses')
 
 # _________
 # ID3 or NB
@@ -96,16 +97,18 @@ list_func_tt_split = \
 list_score_metric = \
     [
         (accuracy_score, {}),
-        # (precision_score, {"average": "weighted"}),  # macro #micro #weighted
-        # (recall_score, {"average": "weighted"}),  # macro #micro #weighted
-        # (f1_score, {"average": "weighted"}),  # macro #micro #weighted
-        # (cohen_kappa_score, {}),
+        (precision_score, {"average": "weighted"}),  # macro #micro #weighted
+        (recall_score, {"average": "weighted"}),  # macro #micro #weighted
+        (f1_score, {"average": "weighted"}),  # macro #micro #weighted
+        (cohen_kappa_score, {}),
     ]
 
 
 def fitClassifier(classifier=None):
     '''
-    Fit the dataset return the classifier
+    Fit the dataset
+    Return the classifier to predict the lenses needed for the patient
+    Return the encoder to transform the patient data
     '''
 
     fileName = "./datasets/fpa_dataset.csv"
@@ -113,28 +116,35 @@ def fitClassifier(classifier=None):
     func_datasetLoader = None
 
     D = load_dataset(fileName, featureName=featureName, func_datasetLoader=func_datasetLoader)
-    show_data(D)  # TODO Transform data
+    # show_data(D)
 
     for (f_tt_split, args_tt_split) in list_func_tt_split:
         (X, y, tt_split_indexes) = train_test_split_recipe(D, f_tt_split, *args_tt_split)
+
         # show_function_name("train_test_split:", f_tt_split)
         # show_train_test_split(X, y, tt_split_indexes, numFirstRows=10)
+
+        encoder = OrdinalEncoder()
+        encoder.fit(X)
+        X = encoder.transform(X)
 
         for (f_score, keyword_args_score) in list_score_metric:
             score_all = score_recipe(classifier, X, y, tt_split_indexes, f_score, **keyword_args_score)
             # show_function_name("score_method:", f_score)
             # show_score(score_all)
 
-    return classifier
+    return classifier, encoder
 
 
-def classifier(age=None, tearRate=None, isMyope=None, isAstigmatic=None, isHypermetrope=None, fittedClassifier=None):
+def modelClassifier(age=None, tearRate=None, isMyope=None, isAstigmatic=None, isHypermetrope=None, fittedClassifier=None, encoder=None):
     '''
-    Predict the lenses needed for the patient based on the fitted classifier
+    Predict the lenses needed for the patient based on the fitted classifier and transforming the data
     '''
 
-    lenses = fittedClassifier.predict([age, tearRate, isMyope, isAstigmatic, isHypermetrope])
-    printLenses(lenses)
+    patient = [[age, tearRate, isMyope, isAstigmatic, isHypermetrope]]
+    patient = encoder.transform(patient)
+    lenses = fittedClassifier.predict(patient)
+    printLenses(lenses[0])
 
 
 # 1R
@@ -151,14 +161,27 @@ def model1R(age=None, tearRate=None, isMyope=None, isAstigmatic=None, isHypermet
 
 # _________
 def main():
-    classifier = DecisionTreeClassifier()  # GaussianNB() or DecisionTreeClassifier()
-    fittedClassifier = fitClassifier(classifier)
-
     age, tearRate, isMyope, isAstigmatic, isHypermetrope = getPatient()
 
-    print()
+    # 1R
+    print('1R')
     model1R(age, tearRate, isMyope, isAstigmatic, isHypermetrope)
-    classifier(age, tearRate, isMyope, isAstigmatic, isHypermetrope, fittedClassifier)
+
+    print()
+
+    # ID3
+    classifier = DecisionTreeClassifier  # GaussianNB() or DecisionTreeClassifier()
+    fittedClassifier, encoder = fitClassifier(classifier())
+    print(classifier.__name__)
+    modelClassifier(age, tearRate, isMyope, isAstigmatic, isHypermetrope, fittedClassifier, encoder)
+
+    print()
+
+    # NB
+    classifier = GaussianNB  # GaussianNB() or DecisionTreeClassifier()
+    fittedClassifier, encoder = fitClassifier(classifier())
+    print(classifier.__name__)
+    modelClassifier(age, tearRate, isMyope, isAstigmatic, isHypermetrope, fittedClassifier, encoder)
 
 
 if __name__ == '__main__':

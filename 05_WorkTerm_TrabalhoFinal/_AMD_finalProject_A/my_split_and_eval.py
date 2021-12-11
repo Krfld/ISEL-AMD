@@ -37,6 +37,8 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, \
 from sklearn.naive_bayes import GaussianNB
 from sklearn.tree import DecisionTreeClassifier
 
+from sklearn.preprocessing import OrdinalEncoder
+
 from sklearn.exceptions import UndefinedMetricWarning
 import warnings
 # NOTE: use "ignore" (instead of "always") if you want to avoid warning due to:
@@ -130,7 +132,7 @@ def load_dataset(fileName, featureName=None, func_datasetLoader=None):
         return func_datasetLoader()
 
     # otherwise, load from "fileName"
-    D = read_csv(fileName, names=featureName)
+    D = read_csv(fileName, names=featureName, dtype=str)
     return D
 
 
