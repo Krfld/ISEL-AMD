@@ -179,7 +179,6 @@ def show_conditionalProbability(dataset, H, E):
 
 def getLowestErrorFeature(dataset):
     errors = {}
-
     feature_list, the_class = dataset.domain.attributes, dataset.domain.class_var
     for feature in feature_list:
         (rowDomain, colDomain, cMatrix) = get_contingencyMatrix(dataset, feature, the_class)

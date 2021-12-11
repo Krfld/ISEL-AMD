@@ -325,10 +325,10 @@ list_func_classifier = \
 list_score_metric = \
     [
         (accuracy_score, {}),
-        # (precision_score, {"average": "weighted"}),  # macro #micro #weighted
-        # (recall_score, {"average": "weighted"}),  # macro #micro #weighted
-        # (f1_score, {"average": "weighted"}),  # macro #micro #weighted
-        # (cohen_kappa_score, {}),
+        (precision_score, {"average": "weighted"}),  # macro #micro #weighted
+        (recall_score, {"average": "weighted"}),  # macro #micro #weighted
+        (f1_score, {"average": "weighted"}),  # macro #micro #weighted
+        (cohen_kappa_score, {}),
     ]
 
 # ACCURACY:
@@ -369,7 +369,7 @@ list_score_metric = \
 fileName = "./Scripts/fpa_dataset.csv"
 featureName = ['age', 'tearRate', 'isMyope', 'isAstigmatic', 'isHypermetrope', 'prescribedLenses']
 
-func_datasetLoader = None  # None (if we want to load the "fileName)
+func_datasetLoader = None  # None (if we want to load the "fileName) # simple_dataset
 
 # ______________________________________________________________________________
 # ______________________________________________________________________________
