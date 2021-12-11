@@ -46,7 +46,8 @@ def getPatient():
 
     return age, tearRate, isMyope, isAstigmatic, isHypermetrope
 
-# ________________________________________________________________
+# ________________________________________________________________~
+# 1R
 
 
 def model1R(age, tearRate, isMyope, isAstigmatic, isHypermetrope):
@@ -60,6 +61,9 @@ def model1R(age, tearRate, isMyope, isAstigmatic, isHypermetrope):
         print('The patient does not need to wear lenses')
     else:
         print(f'The patient needs to wear {lenses} lenses')
+
+# ___________________________________________________________________
+# ID3 or NB
 
 
 def classifier(age, tearRate, isMyope, isAstigmatic, isHypermetrope):
