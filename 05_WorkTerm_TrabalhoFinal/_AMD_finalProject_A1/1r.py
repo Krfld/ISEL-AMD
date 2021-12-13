@@ -177,23 +177,34 @@ def show_conditionalProbability(dataset, H, E):
             print("  P({} | {}) = {:.3f}".format(h, e, P_h_e))
 
 
-def getLowestErrorFeature(dataset):
-    errors = {}
+def getLowestErrorFeature(dataset, saveFile=False):
+    text = '1R\n( attr, valueAttr, valueTarget ) : (error, total)\n\n'
+
+    featureErrors = {}
     feature_list, the_class = dataset.domain.attributes, dataset.domain.class_var
     for feature in feature_list:
         (rowDomain, colDomain, cMatrix) = get_contingencyMatrix(dataset, feature, the_class)
 
         valueError = 0
-        errors[feature.name] = 0
+        featureErrors[feature.name] = 0
         for row in rowDomain:
             freqs = cMatrix[rowDomain.index(row), :]
             rowTotal = sum(freqs)
-            valueError += rowTotal - max(freqs)
-            errors[feature.name] += rowTotal
-        errors[feature.name] = valueError / errors[feature.name]
+            errors = list(rowTotal - freqs)
+            valueError += min(errors)
+            featureErrors[feature.name] += rowTotal
 
-    for feature in errors:
-        if(errors[feature] == min(errors.values())):
+            error = min(errors)
+            text += f'( {feature.name}, {row}, {colDomain[errors.index(error)]} ) : ({error}, {rowTotal})\n'
+
+        featureErrors[feature.name] = valueError / featureErrors[feature.name]
+
+    if (saveFile):
+        with open('oneR_OUTPUT.txt', 'w') as f:
+            f.write(text)
+
+    for feature in featureErrors:
+        if(featureErrors[feature] == min(featureErrors.values())):
             return feature
 
 
@@ -205,12 +216,12 @@ def test():
 
     #! Output to .txt
 
-    print()
-    aStr = ">> Percentage of missing values per variable <<"
-    my_print(aStr)
-    (variable_list, missingValue_list) = get_missingValuePercentage(dataset)
-    for i in range(len(variable_list)):
-        print("%4.1f%s %s" % (missingValue_list[i], '%', variable_list[i].name))
+    # print()
+    # aStr = ">> Percentage of missing values per variable <<"
+    # my_print(aStr)
+    # (variable_list, missingValue_list) = get_missingValuePercentage(dataset)
+    # for i in range(len(variable_list)):
+    #     print("%4.1f%s %s" % (missingValue_list[i], '%', variable_list[i].name))
 
     # print()
     # aStr = ">> Contingency Matrix <<"
@@ -219,12 +230,14 @@ def test():
 
     the_feature = getLowestErrorFeature(dataset)
 
-    print()
-    H = dataset.domain.class_var
-    E = the_feature
-    aStr = ">> P( %s | %s ) <<" % (H, E)
-    my_print(aStr)
-    show_conditionalProbability(dataset, H, E)
+    # print()
+    # H = dataset.domain.class_var
+    # E = the_feature
+    # aStr = ">> P( %s | %s ) <<" % (H, E)
+    # my_print(aStr)
+    # show_conditionalProbability(dataset, H, E)
+
+    getLowestErrorFeature(dataset, False)  # True to save to file
 
     print()
     aStr = "(1R-approach) >>Error Matrix>> %s & %s <<" % (the_feature, dataset.domain.class_var)
@@ -245,6 +258,17 @@ def test():
         classValue = classDomain[errorMinIndex]
         showStr = "(" + the_feature + ", " + featureValue + ", " + classValue + ") : "
         print(showStr + "{:.3f}".format(errorMin))
+
+    with open('oneR_OUTPUT.txt', 'w') as f:
+        f.write("1R for the '{}' feature are:\n".format(the_feature))
+        for feature in range(len(featureDomain)):
+            errorFeature = errorMatrix[:, feature]
+            errorMin = min(errorFeature)
+            errorMinIndex = errorFeature.tolist().index(errorMin)
+            featureValue = featureDomain[feature]
+            classValue = classDomain[errorMinIndex]
+            showStr = "(" + the_feature + ", " + featureValue + ", " + classValue + ") : "
+            f.write(showStr + "{:.3f}\n".format(errorMin))
 
 
 # _______________________________________________________________________________

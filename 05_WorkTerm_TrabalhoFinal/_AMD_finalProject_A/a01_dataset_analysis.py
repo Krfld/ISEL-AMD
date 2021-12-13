@@ -177,23 +177,34 @@ def show_conditionalProbability(dataset, H, E):
             print("  P({} | {}) = {:.3f}".format(h, e, P_h_e))
 
 
-def getLowestErrorFeature(dataset):
-    errors = {}
+def getLowestErrorFeature(dataset, saveFile=False):
+    text = '1R\n( attr, valueAttr, valueTarget ) : (error, total)\n\n'
+
+    featureErrors = {}
     feature_list, the_class = dataset.domain.attributes, dataset.domain.class_var
     for feature in feature_list:
         (rowDomain, colDomain, cMatrix) = get_contingencyMatrix(dataset, feature, the_class)
 
         valueError = 0
-        errors[feature.name] = 0
+        featureErrors[feature.name] = 0
         for row in rowDomain:
             freqs = cMatrix[rowDomain.index(row), :]
             rowTotal = sum(freqs)
-            valueError += rowTotal - max(freqs)
-            errors[feature.name] += rowTotal
-        errors[feature.name] = valueError / errors[feature.name]
+            errors = list(rowTotal - freqs)
+            valueError += min(errors)
+            featureErrors[feature.name] += rowTotal
 
-    for feature in errors:
-        if(errors[feature] == min(errors.values())):
+            error = min(errors)
+            text += f'( {feature.name}, {row}, {colDomain[errors.index(error)]} ) : ({error}, {rowTotal})\n'
+
+        featureErrors[feature.name] = valueError / featureErrors[feature.name]
+
+    if (saveFile):
+        with open('oneR_OUTPUT.txt', 'w') as f:
+            f.write(text)
+
+    for feature in featureErrors:
+        if(featureErrors[feature] == min(featureErrors.values())):
             return feature
 
 
@@ -217,6 +228,8 @@ def test():
     # showAll_contingencyMatrix(dataset)
 
     the_feature = getLowestErrorFeature(dataset)
+
+    return
 
     print()
     H = "lenses"
