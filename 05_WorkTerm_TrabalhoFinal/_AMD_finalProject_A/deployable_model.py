@@ -1,6 +1,21 @@
 from my_split_and_eval import *
 
 
+# Get method to use
+# ______________
+def getMethod():
+    validInput = False
+    while not validInput:
+        method = input('Method (1r | id3 | nb): ')
+        if method != '1r' and method != 'id3' and method != 'nb':
+            print('Invalid method')
+            validInput = False
+        else:
+            validInput = True
+
+    return method
+
+
 # Get patient information
 # _______________
 def getPatient():
@@ -53,6 +68,17 @@ def getPatient():
     return age, tearRate, isMyope, isAstigmatic, isHypermetrope
 
 
+# Load dataset
+# ________________
+def loadDataset():
+    fileName = "./datasets/fpa_dataset.csv"
+    featureName = ['age', 'tearRate', 'isMyope', 'isAstigmatic', 'isHypermetrope', 'prescribedLenses']
+    func_datasetLoader = None
+
+    dataset = load_dataset(fileName, featureName=featureName, func_datasetLoader=func_datasetLoader)
+    return dataset
+
+
 # Print result
 # ___________________________
 def printLenses(lenses=None):
@@ -61,10 +87,10 @@ def printLenses(lenses=None):
     else:
         print(f'The patient needs to wear \'{lenses}\' lenses')
 
+
 # _________
 # ID3 or NB
 # _________
-
 
 # ___________________________
 # lists to define the:
@@ -85,7 +111,7 @@ list_func_tt_split = \
         # (fold_split, (3, seed)),
         # (stratified_fold_split, (3, seed)),
         # (repeated_fold_split, (3, 2, seed)),
-        # (repeated_stratified_fold_split, (3, 2, seed)),
+        # (repeated_stratified_fold_split, (3, 3, seed)),
         # (leave_one_out, ()),
         # (leave_p_out, (2, )),
         # (bootstrap_split_once, (seed, )),
@@ -111,11 +137,7 @@ def fitClassifier(classifier=None):
     Return the encoder to transform the patient data
     '''
 
-    fileName = "./datasets/fpa_dataset.csv"
-    featureName = ['age', 'tearRate', 'isMyope', 'isAstigmatic', 'isHypermetrope', 'prescribedLenses']
-    func_datasetLoader = None
-
-    D = load_dataset(fileName, featureName=featureName, func_datasetLoader=func_datasetLoader)
+    D = loadDataset()
     # show_data(D)
 
     for (f_tt_split, args_tt_split) in list_func_tt_split:
@@ -130,9 +152,10 @@ def fitClassifier(classifier=None):
 
         for (f_score, keyword_args_score) in list_score_metric:
             score_all = score_recipe(classifier, X, y, tt_split_indexes, f_score, **keyword_args_score)
-            # show_function_name("score_method:", f_score)
-            # show_score(score_all)
+            show_function_name("score_method:", f_score)
+            show_score(score_all)
 
+    print()
     return classifier, encoder
 
 
@@ -147,8 +170,11 @@ def modelClassifier(age=None, tearRate=None, isMyope=None, isAstigmatic=None, is
     printLenses(lenses[0])
 
 
+# __
 # 1R
-# ________________________________________________________________
+# __
+
+# _________________________________________________________________________________________
 def model1R(age=None, tearRate=None, isMyope=None, isAstigmatic=None, isHypermetrope=None):
     '''
     Using the file a01_dataset_analysis.py,
@@ -159,29 +185,46 @@ def model1R(age=None, tearRate=None, isMyope=None, isAstigmatic=None, isHypermet
     printLenses(lenses)
 
 
+# ____________
+def score1R():
+    D = loadDataset()
+
+    y_test = list(D['prescribedLenses'])
+    y_predict = ['none' if value == 'false' else 'hard' for value in D['isAstigmatic']]
+
+    for (f_score, keyword_args_score) in list_score_metric:
+        score = f_score(y_test, y_predict, **keyword_args_score)
+        show_function_name("score_method:", f_score)
+        show_score([score])
+
+    print()
+
+
 # _________
 def main():
+    method = getMethod()
+
+    print()
+    if method == '1r':
+        print('1R')
+        score1R()
+    elif method == 'id3':
+        classifier = DecisionTreeClassifier  # GaussianNB() or DecisionTreeClassifier()
+        print(classifier.__name__)
+        fittedClassifier, encoder = fitClassifier(classifier())
+    elif method == 'nb':
+        classifier = GaussianNB  # GaussianNB() or DecisionTreeClassifier()
+        print(classifier.__name__)
+        fittedClassifier, encoder = fitClassifier(classifier())
+
     age, tearRate, isMyope, isAstigmatic, isHypermetrope = getPatient()
 
-    # 1R
-    print('1R')
-    model1R(age, tearRate, isMyope, isAstigmatic, isHypermetrope)
-
-    print()
-
-    # ID3
-    classifier = DecisionTreeClassifier  # GaussianNB() or DecisionTreeClassifier()
-    fittedClassifier, encoder = fitClassifier(classifier())
-    print(classifier.__name__)
-    modelClassifier(age, tearRate, isMyope, isAstigmatic, isHypermetrope, fittedClassifier, encoder)
-
-    print()
-
-    # NB
-    classifier = GaussianNB  # GaussianNB() or DecisionTreeClassifier()
-    fittedClassifier, encoder = fitClassifier(classifier())
-    print(classifier.__name__)
-    modelClassifier(age, tearRate, isMyope, isAstigmatic, isHypermetrope, fittedClassifier, encoder)
+    if method == '1r':
+        model1R(age, tearRate, isMyope, isAstigmatic, isHypermetrope)
+    elif method == 'id3':
+        modelClassifier(age, tearRate, isMyope, isAstigmatic, isHypermetrope, fittedClassifier, encoder)
+    elif method == 'nb':
+        modelClassifier(age, tearRate, isMyope, isAstigmatic, isHypermetrope, fittedClassifier, encoder)
 
 
 if __name__ == '__main__':
