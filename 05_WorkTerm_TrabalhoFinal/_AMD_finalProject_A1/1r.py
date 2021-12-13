@@ -203,6 +203,8 @@ def test():
     fileName = "./dataset_long_name_PTS_INPUT_v01"
     dataset = load(fileName)
 
+    #! Output to .txt
+
     print()
     aStr = ">> Percentage of missing values per variable <<"
     my_print(aStr)
