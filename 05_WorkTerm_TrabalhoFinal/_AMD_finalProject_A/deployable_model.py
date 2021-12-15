@@ -217,16 +217,19 @@ def main():
     if method == '1r':
         print('1R')
         score1R()
-    elif method == 'id3':
-        classifier = DecisionTreeClassifier  # GaussianNB() or DecisionTreeClassifier()
-        print(classifier.__name__)
-        # fittedClassifier, encoder = fitClassifier(classifier)
-        fittedClassifier, encoder = joblib.load(f'./models/{classifier.__name__}/classifier'), joblib.load(f'./models/{classifier.__name__}/encoder')
-    elif method == 'nb':
-        classifier = GaussianNB  # GaussianNB() or DecisionTreeClassifier()
-        print(classifier.__name__)
-        # fittedClassifier, encoder = fitClassifier(classifier)
-        fittedClassifier, encoder = joblib.load(f'./models/{classifier.__name__}/classifier'), joblib.load(f'./models/{classifier.__name__}/encoder')
+    else:
+        if method == 'id3':
+            classifier = DecisionTreeClassifier  # GaussianNB() or DecisionTreeClassifier()
+            print(classifier.__name__)
+        elif method == 'nb':
+            classifier = GaussianNB  # GaussianNB() or DecisionTreeClassifier()
+            print(classifier.__name__)
+
+        # fittedClassifier, encoder = fitClassifier(classifier) # Train classifier and encoder
+
+        # Load classifier and encoder
+        fittedClassifier = joblib.load(f'./models/{classifier.__name__}/classifier')
+        encoder = joblib.load(f'./models/{classifier.__name__}/encoder')
 
     age, tearRate, isMyope, isAstigmatic, isHypermetrope = getPatient()
 
