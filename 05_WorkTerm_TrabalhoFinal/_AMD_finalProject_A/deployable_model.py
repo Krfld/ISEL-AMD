@@ -1,8 +1,10 @@
 from my_split_and_eval import *
-
+import joblib
 
 # Get method to use
 # ______________
+
+
 def getMethod():
     validInput = False
     while not validInput:
@@ -137,6 +139,9 @@ def fitClassifier(classifier=None):
     Return the encoder to transform the patient data
     '''
 
+    classifierName = classifier.__name__
+    classifier = classifier()
+
     D = loadDataset()
     # show_data(D)
 
@@ -154,6 +159,10 @@ def fitClassifier(classifier=None):
             score_all = score_recipe(classifier, X, y, tt_split_indexes, f_score, **keyword_args_score)
             show_function_name("score_method:", f_score)
             show_score(score_all)
+
+    print(classifierName)
+    joblib.dump(classifier, f'./models/{classifierName}/classifier')
+    joblib.dump(encoder, f'./models/{classifierName}/encoder')
 
     print()
     return classifier, encoder
@@ -211,11 +220,13 @@ def main():
     elif method == 'id3':
         classifier = DecisionTreeClassifier  # GaussianNB() or DecisionTreeClassifier()
         print(classifier.__name__)
-        fittedClassifier, encoder = fitClassifier(classifier())
+        # fittedClassifier, encoder = fitClassifier(classifier)
+        fittedClassifier, encoder = joblib.load(f'./models/{classifier.__name__}/classifier'), joblib.load(f'./models/{classifier.__name__}/encoder')
     elif method == 'nb':
         classifier = GaussianNB  # GaussianNB() or DecisionTreeClassifier()
         print(classifier.__name__)
-        fittedClassifier, encoder = fitClassifier(classifier())
+        # fittedClassifier, encoder = fitClassifier(classifier)
+        fittedClassifier, encoder = joblib.load(f'./models/{classifier.__name__}/classifier'), joblib.load(f'./models/{classifier.__name__}/encoder')
 
     age, tearRate, isMyope, isAstigmatic, isHypermetrope = getPatient()
 
