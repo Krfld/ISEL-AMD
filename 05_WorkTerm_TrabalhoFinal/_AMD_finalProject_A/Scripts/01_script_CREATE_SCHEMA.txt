@@ -17,9 +17,9 @@ DROP TABLE IF EXISTS DIAGNOSTIC;
 
 CREATE TABLE DOCTOR
 (
-	cc			VARCHAR( 8 )	NOT NULL	PRIMARY KEY,
-	name		VARCHAR( 50 )	NOT NULL,
-	birthDate	DATE			NOT NULL
+	cc			VARCHAR		NOT NULL	PRIMARY KEY,
+	name		VARCHAR		NOT NULL,
+	birthDate	DATE		NOT NULL
 )
 ;
 
@@ -29,9 +29,9 @@ CREATE TABLE DOCTOR
 
 CREATE TABLE PATIENT
 (
-	cc			VARCHAR( 8 )	NOT NULL	PRIMARY KEY,
-	name		VARCHAR( 50 )	NOT NULL,
-	birthDate	DATE			NOT NULL
+	cc			VARCHAR		NOT NULL	PRIMARY KEY,
+	name		VARCHAR		NOT NULL,
+	birthDate	DATE		NOT NULL
 )
 ;
 
@@ -54,9 +54,9 @@ CREATE TABLE DISEASE
 
 CREATE TABLE DIAGNOSTIC
 (
-	id			INT				NOT NULL	PRIMARY KEY,
-	age			VARCHAR( 20 )	NOT NULL,
-	tearRate	VARCHAR( 20 )	NOT NULL
+	id			INT			NOT NULL	PRIMARY KEY,
+	age			VARCHAR		NOT NULL,
+	tearRate	VARCHAR		NOT NULL
 )
 ;
 
@@ -66,12 +66,12 @@ CREATE TABLE DIAGNOSTIC
 
 CREATE TABLE TREATS
 (
-	prescriptionDate	DATE			NOT NULL,
-	prescribedLenses	VARCHAR( 20 )	NOT NULL,
-	diseaseId			INT				NOT NULL,
-	diagnosticId		INT				NOT NULL,
-	ccDoctor			VARCHAR( 8 )	NOT NULL,
-	ccPatient			VARCHAR( 8 )	NOT NULL,
+	prescriptionDate	DATE		NOT NULL,
+	prescribedLenses	VARCHAR		NOT NULL,
+	diseaseId			INT			NOT NULL,
+	diagnosticId		INT			NOT NULL,
+	ccDoctor			VARCHAR		NOT NULL,
+	ccPatient			VARCHAR		NOT NULL,
 	
 	PRIMARY KEY( prescriptionDate, diseaseId, diagnosticId, ccDoctor, ccPatient ),
 	

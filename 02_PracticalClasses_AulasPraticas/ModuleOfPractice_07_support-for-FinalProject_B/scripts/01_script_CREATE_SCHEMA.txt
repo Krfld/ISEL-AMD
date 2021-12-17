@@ -23,13 +23,23 @@
 -------------------------------
 DROP TABLE IF EXISTS TRACK;
 --------------------------------
--- CREATE TABLE TRACK
--- (
--- tracking_record_id BIGINT NOT NULL,
--- date_time          TIMESTAMP WITHOUT TIME ZONE NOT NULL,
--- user_gui           VARCHAR,
---  <COMPLETE>
---)
+CREATE TABLE TRACK
+(
+	tracking_record_id	BIGINT NOT NULL,
+	date_time			TIMESTAMP WITHOUT TIME ZONE NOT NULL,
+	user_gui			VARCHAR,
+	company				VARCHAR,
+	tracking_id			VARCHAR,
+	meio				VARCHAR,
+	ip					VARCHAR,
+	browser				VARCHAR,
+	campaign_id			VARCHAR,
+	product_gui			VARCHAR,
+	link				VARCHAR,
+	session_id			VARCHAR,
+	referer				VARCHAR,
+	cookie_id			VARCHAR
+)
 ;
 
 

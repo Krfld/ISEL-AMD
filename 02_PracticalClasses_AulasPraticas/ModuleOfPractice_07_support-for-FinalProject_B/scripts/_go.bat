@@ -14,7 +14,6 @@ SET portNumber=5432
 ::________________________________________________________________________
 %psqlPath%\psql -h localhost -p %portNumber% -d %dataBase% -U %userName% -f %1
 
-
 :: uncomment next line in case there is a warning regarding the "code page"
 :: cmd.exe /c chcp 1252
 
