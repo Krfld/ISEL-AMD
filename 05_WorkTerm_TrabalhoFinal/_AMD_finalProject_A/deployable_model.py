@@ -107,9 +107,9 @@ seed = 5
 list_func_tt_split = \
     [
         # (holdout, (1.0/3.0, seed)),
-        (stratified_holdout, (1.0/3.0, seed)),
+        # (stratified_holdout, (1.0/3.0, seed)),
         # (repeated_holdout, (1.0/3.0, 2, seed)),
-        # (repeated_stratified_holdout, (1.0/3.0, 10, seed)),
+        (repeated_stratified_holdout, (1.0/3.0, 10, seed)),
         # (fold_split, (3, seed)),
         # (stratified_fold_split, (3, seed)),
         # (repeated_fold_split, (3, 2, seed)),
@@ -225,11 +225,11 @@ def main():
             classifier = GaussianNB  # GaussianNB() or DecisionTreeClassifier()
             print(classifier.__name__)
 
-        # fittedClassifier, encoder = fitClassifier(classifier) # Train classifier and encoder
+        fittedClassifier, encoder = fitClassifier(classifier)  # Train classifier and encoder
 
         # Load classifier and encoder
-        fittedClassifier = joblib.load(f'./models/{classifier.__name__}/classifier')
-        encoder = joblib.load(f'./models/{classifier.__name__}/encoder')
+        # fittedClassifier = joblib.load(f'./models/{classifier.__name__}/classifier')
+        # encoder = joblib.load(f'./models/{classifier.__name__}/encoder')
 
     age, tearRate, isMyope, isAstigmatic, isHypermetrope = getPatient()
 
