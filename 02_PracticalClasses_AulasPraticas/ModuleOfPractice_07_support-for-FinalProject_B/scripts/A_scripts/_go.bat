@@ -3,7 +3,7 @@
 set psqlPath="C:\Program Files\PostgreSQL\14\bin"
 
 :: Database, Username and Port
-SET dataBase=postgres
+SET dataBase=fpa_db
 SET userName=postgres
 SET portNumber=5432
 

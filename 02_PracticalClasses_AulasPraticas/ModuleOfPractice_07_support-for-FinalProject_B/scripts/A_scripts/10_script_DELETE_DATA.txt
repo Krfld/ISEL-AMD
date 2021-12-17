@@ -1,0 +1,12 @@
+\set dataBase fpa_db
+;
+\set userName postgres
+;
+\connect :dataBase :userName
+;
+
+DELETE FROM TREATS;
+DELETE FROM DOCTOR;
+DELETE FROM PATIENT;
+DELETE FROM DISEASE;
+DELETE FROM DIAGNOSTIC;
