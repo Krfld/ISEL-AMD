@@ -1,0 +1,15 @@
+\set dataBase fpa_db
+;
+\set userName postgres
+;
+\connect :dataBase :userName
+;
+
+DROP VIEW IF EXISTS fpa_3RowHeader;
+DROP VIEW IF EXISTS fpa_view;
+
+DROP TABLE IF EXISTS TREATS;
+DROP TABLE IF EXISTS DOCTOR;
+DROP TABLE IF EXISTS PATIENT;
+DROP TABLE IF EXISTS DISEASE;
+DROP TABLE IF EXISTS DIAGNOSTIC;

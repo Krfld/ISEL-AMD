@@ -211,7 +211,8 @@ def getLowestErrorFeature(dataset, saveFile=False):
 # _______________________________________________________________________________
 # implementation of some test cases
 def test():
-    fileName = "./dataset_long_name_PTS_INPUT_v01"
+    fileName = "./datasets/fpa_dataset"
+    fileName = "./datasets/dataset_long_name_PTS_INPUT"
     dataset = load(fileName)
 
     # print()
@@ -226,7 +227,7 @@ def test():
     # my_print(aStr)
     # showAll_contingencyMatrix(dataset)
 
-    the_feature = getLowestErrorFeature(dataset)
+    the_feature = getLowestErrorFeature(dataset, False)  # True to save to file
 
     # print()
     # H = dataset.domain.class_var
@@ -234,8 +235,6 @@ def test():
     # aStr = ">> P( %s | %s ) <<" % (H, E)
     # my_print(aStr)
     # show_conditionalProbability(dataset, H, E)
-
-    getLowestErrorFeature(dataset, False)  # True to save to file
 
     print()
     aStr = "(1R-approach) >>Error Matrix>> %s & %s <<" % (the_feature, dataset.domain.class_var)
@@ -257,16 +256,16 @@ def test():
         showStr = "(" + the_feature + ", " + featureValue + ", " + classValue + ") : "
         print(showStr + "{:.3f}".format(errorMin))
 
-    with open('oneR_OUTPUT.txt', 'w') as f:
-        f.write("1R for the '{}' feature are:\n".format(the_feature))
-        for feature in range(len(featureDomain)):
-            errorFeature = errorMatrix[:, feature]
-            errorMin = min(errorFeature)
-            errorMinIndex = errorFeature.tolist().index(errorMin)
-            featureValue = featureDomain[feature]
-            classValue = classDomain[errorMinIndex]
-            showStr = "(" + the_feature + ", " + featureValue + ", " + classValue + ") : "
-            f.write(showStr + "{:.3f}\n".format(errorMin))
+    # with open('oneR_OUTPUT.txt', 'w') as f:
+    #     f.write("1R for the '{}' feature are:\n".format(the_feature))
+    #     for feature in range(len(featureDomain)):
+    #         errorFeature = errorMatrix[:, feature]
+    #         errorMin = min(errorFeature)
+    #         errorMinIndex = errorFeature.tolist().index(errorMin)
+    #         featureValue = featureDomain[feature]
+    #         classValue = classDomain[errorMinIndex]
+    #         showStr = "(" + the_feature + ", " + featureValue + ", " + classValue + ") : "
+    #         f.write(showStr + "{:.3f}\n".format(errorMin))
 
 
 # _______________________________________________________________________________
