@@ -1,3 +1,9 @@
+SCRIPTS
+
+To test and run the scripts, change te format from '.txt' to '.bat'.
+
+DEPLOYABLE MODEL
+
 To execute the deployed model, open 'deployable_model.py'.
 
 When executing, you'll be prompt to input the method to use ('1r' or 'id3' or 'nb') and the patient information.
