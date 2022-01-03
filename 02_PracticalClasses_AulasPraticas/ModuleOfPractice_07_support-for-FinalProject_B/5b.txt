@@ -1,0 +1,4 @@
+Looking at the description of the basket format, the '=' assigns a value to the attribute.
+The 'product_gui' data doesn't have a value to assign so it will fail to parse the string.
+
+Normalizing strings avoids incompatibility with encoders
