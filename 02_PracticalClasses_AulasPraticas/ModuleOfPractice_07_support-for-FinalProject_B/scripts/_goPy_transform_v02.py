@@ -13,6 +13,7 @@
 # _______________________________________________________________________________
 # Modules to Evaluate
 import csv
+from typing import Dict
 import unicodedata
 
 
@@ -24,7 +25,7 @@ import unicodedata
 # def to_unicode( obj, encoding='utf-8' ):
 # if isinstance( obj, basestring ):
 # if not isinstance( obj, unicode ):
-##            obj = unicode( obj, encoding )
+# obj = unicode( obj, encoding )
 # return obj
 
 
@@ -32,7 +33,7 @@ import unicodedata
 # remove accentes in an unicode string
 def remove_accents(aString, encoding='utf-8'):
     # next instruction is not necessary in Python3
-    #aString_unicode = to_unicode( aString, encoding )
+    # aString_unicode = to_unicode( aString, encoding )
     aString_unicode = aString
     nfkd_form = unicodedata.normalize('NFKD', aString_unicode)
     only_ascii_form = nfkd_form.encode('ascii', 'ignore').decode(encoding)
@@ -81,7 +82,7 @@ def generateBasket(fileNameIN):
     with open(fileNameIN) as f:
         reader = csv.reader(f, delimiter=';', quoting=csv.QUOTE_NONE)
         for row in reader:
-            #print( row )
+            # print( row )
 
             transactionID = row[indexTransaction]
             # if transactionID not in basket.keys():
@@ -107,12 +108,18 @@ def generateBasket(fileNameIN):
 
 # _______________________________________________________________________________
 # generate a dataset file with the ".basket" structure expected by Orange
-def generateDataFile_basket(basket, fileNameOUT):
+def generateDataFile_basket(basket: Dict, fileNameOUT):
     with open(fileNameOUT, mode='wt', encoding='utf-8') as f:
-        # for transactionID in basket.keys():
-        for transactionID in basket:
+        for transactionID in basket.keys():
             line = ""
-            #!<implement-your-code-here>
+            j = 0
+            for i in basket[transactionID].keys():
+                j += 1
+                line += f'{i}'
+                if basket[transactionID][i] > 1:
+                    line += f'={basket[transactionID][i]}'
+                if j != len(basket[transactionID].keys()):
+                    line += ', '
             f.write(line + '\n')
 
 
