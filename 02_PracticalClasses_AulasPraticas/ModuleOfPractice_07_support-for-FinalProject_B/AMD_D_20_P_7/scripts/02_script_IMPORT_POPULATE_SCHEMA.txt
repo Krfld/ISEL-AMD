@@ -43,6 +43,6 @@ DELETE FROM TRACK;
 --========================
 -- Testing the copyed data
 --========================
--- SELECT * FROM TRACK
--- LIMIT 100
-;
+--SELECT * FROM TRACK
+--LIMIT 100
+--;
