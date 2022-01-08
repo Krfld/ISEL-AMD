@@ -23,11 +23,16 @@
 
 
 ---------------------------------
+
 DROP VIEW IF EXISTS v_export;
 DROP VIEW IF EXISTS v_number_of_events_per_session_number_of_cookies;
 DROP VIEW IF EXISTS v_number_of_cookies_number_of_sessions;
 DROP VIEW IF EXISTS v_cookie_number_of_sessions;
 DROP VIEW IF EXISTS v_cookie_session_number_of_events;
+
+DROP VIEW IF EXISTS v_total_number_of_visitors;
+DROP VIEW IF EXISTS v_total_number_of_events;
+DROP VIEW IF EXISTS v_distribution_of_visitors_and_sessions;
 ---------------------------------
 
 
@@ -35,6 +40,8 @@ DROP VIEW IF EXISTS v_cookie_session_number_of_events;
 --=============================================================================
 -- total number of events (each tuple is an event)
 --=============================================================================
+CREATE VIEW v_total_number_of_events( totalevents_jan_2012 )
+AS
 SELECT COUNT(*) as total_events
 FROM track
 ;
@@ -44,9 +51,13 @@ FROM track
 --=============================================================================
 -- total number of distinct cookies (visitors)
 --=============================================================================
+CREATE VIEW v_total_number_of_visitors( totalnumberofvisitors_cookie_id_jan_2012 )
+AS
 SELECT COUNT(*) AS total_number_of_cookies
 FROM (SELECT DISTINCT cookie_id FROM track) AS T
 ;
+
+
 
 
 
@@ -90,18 +101,18 @@ ORDER BY number_of_events DESC, number_of_sessions DESC
 --=============================================================================
 -- aggregate number of sessions and get total cookies (visitors) at each session
 --=============================================================================
-CREATE VIEW v_number_of_cookies_number_of_sessions( number_of_cookies, number_of_sessions )
+CREATE VIEW v_distribution_of_visitors_and_sessions( numberofvisitors, numberofsessions )
 AS
-SELECT COUNT(cookie_id) as number_of_cookies, number_of_sessions
+SELECT COUNT(cookie_id) as numberofvisitors, number_of_sessions as numberofsessions
 FROM v_cookie_number_of_sessions
-GROUP BY number_of_sessions
-ORDER BY number_of_sessions DESC
+GROUP BY numberofsessions
+ORDER BY numberofvisitors DESC, numberofsessions
 ;
 
 
 
 --SELECT *
---FROM v_number_of_cookies_number_of_sessions
+--FROM v_distribution_of_visitors_and_sessions
 --;
 
 
