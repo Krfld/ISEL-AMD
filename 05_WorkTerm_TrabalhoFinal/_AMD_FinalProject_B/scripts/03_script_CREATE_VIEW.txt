@@ -135,6 +135,13 @@ ORDER BY numberofeventspersession
 --FROM v_distribution_of_events_per_session_and_visitors
 --;
 
+CREATE VIEW v_distribution_of_visitors_and_number_of_sessions_and_total_number_of_events( visitor_id, numberofsessions, totalnumberofevents )
+AS
+SELECT cookie_id as visitor_id, number_of_sessions as numberofsessions, number_of_events as totalnumberofevents
+FROM v_cookie_number_of_sessions
+WHERE number_of_sessions = 18
+ORDER BY cookie_id
+;
 
 
 --=============================================================================
