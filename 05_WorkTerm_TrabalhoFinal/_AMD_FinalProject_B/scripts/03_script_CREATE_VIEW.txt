@@ -24,6 +24,7 @@
 
 ---------------------------------
 
+DROP VIEW IF EXISTS v_transaction_product;
 DROP VIEW IF EXISTS v_export;
 DROP VIEW IF EXISTS v_number_of_events_per_session_number_of_cookies;
 DROP VIEW IF EXISTS v_number_of_cookies_number_of_sessions;
@@ -167,6 +168,11 @@ ORDER BY cookie_id, session_id, product_gui  -- commented for final dataset as t
 --;
 
 
-
-
-
+CREATE VIEW v_transaction_product( tracking_record_id, product_gui )
+AS
+SELECT T.tracking_record_id, V.product_gui
+FROM v_export as V, track as T
+WHERE V.cookie_id = T.cookie_id AND V.session_id = T.session_id AND V.product_gui = T.product_gui
+GROUP BY T.tracking_record_id, V.product_gui
+ORDER BY T.tracking_record_id
+;
