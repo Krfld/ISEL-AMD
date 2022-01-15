@@ -190,8 +190,8 @@ def generateDataFile_tab(basket, all_itemset, fileNameOUT):
 if __name__ == "__main__":
     # assumption: the CSV file does not contain the header line
     # (make sure that the export script does not generate the CSV header)
-    fIN = "tid_pid.txt"  # "z_abstract_test.txt" #"z_dataset_sample_OUT.txt"
-    fOUT = "tid_pid"  # "z_abstract_test"     #"zz_dataset_2012_01"
+    fIN = "scripts/tid_pid.txt"  # "z_abstract_test.txt" #"z_dataset_sample_OUT.txt"
+    fOUT = "scripts/tid_pid"  # "z_abstract_test"     #"zz_dataset_2012_01"
     print()
     print(">> 1. Generate Basket structure from CSV file: " + fIN)
     (basket, all_itemset) = generateBasket(fIN)
