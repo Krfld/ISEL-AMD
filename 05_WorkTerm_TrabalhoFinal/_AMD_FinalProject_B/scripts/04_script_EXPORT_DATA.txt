@@ -22,7 +22,7 @@
 --==========================
 -- [PRS: ADAPT]
 -- the file path where to write the data
-\set filePath 'tid_pid.txt'
+\set filePath 'cid_pid.txt'
 --==========================
 
 
