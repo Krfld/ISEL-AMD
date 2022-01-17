@@ -24,6 +24,8 @@
 
 ---------------------------------
 
+DROP VIEW IF EXISTS v_product_counts_total;
+DROP VIEW IF EXISTS v_product_counts_from_v_export;
 DROP VIEW IF EXISTS v_transaction_product;
 DROP VIEW IF EXISTS v_export;
 DROP VIEW IF EXISTS v_number_of_events_per_session_number_of_cookies;
@@ -175,4 +177,22 @@ FROM v_export as V, track as T
 WHERE V.cookie_id = T.cookie_id AND V.session_id = T.session_id AND V.product_gui = T.product_gui
 GROUP BY V.cookie_id, V.product_gui
 ORDER BY cookie_id, product_gui
+;
+
+-- To view most products viewed
+
+CREATE VIEW v_product_counts_total
+AS
+SELECT product_gui, count(*) as product_count
+FROM track
+GROUP BY product_gui
+ORDER BY product_count DESC
+;
+
+CREATE VIEW v_product_counts_from_v_export
+AS
+SELECT product_gui, count(*) as product_count
+FROM v_transaction_product
+GROUP BY product_gui
+ORDER BY product_count DESC
 ;
