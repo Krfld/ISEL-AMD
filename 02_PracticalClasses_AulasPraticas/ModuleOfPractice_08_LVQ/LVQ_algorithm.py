@@ -145,12 +145,16 @@ def print_info(description, aHeader, aList, aStr=None, aFloat=None):
 seed(1)
 
 _alpha = 0.7  # 0.3
-_maxEpoch = 100  # 100
-_codebookRandom = False  # True
+_maxEpoch = 1  # 100
+_codebookRandom = True  # True
 # next variable only used for the random codebook (if _codebookRandom = True):
-_dimCodebook = 2
+_dimCodebook = 100
 # ______________________________________________________________________________
 
+
+# EX 5
+# a) totalError decreases when _codebookRandom = True and _dimCodebook increases
+# Means more data to work with
 
 # ______________________________________________________________________________
 # The Dataset and Codebook files in CSV Format
@@ -165,17 +169,28 @@ def main():
     (data_header, dataset) = read_csv(_datasetFileName_csv)
     print_info(">> dataset:", data_header, dataset)
 
-    (cbook_header, codebook) = (list(), list())
-    if(_codebookRandom):
-        codebook = [build_codebook_random(dataset) for i in range(_dimCodebook)]
-    else:
-        (cbook_header, codebook) = read_csv(_codebookFileName_csv)
-    print_info(">> initial codebook:", cbook_header, codebook)
+    totalErrors = []
+    for j in range(100):
 
-    # learn a codebook (given an initial one)
-    (codebook, totalError) = train_LVQ(dataset, codebook, _alpha, _maxEpoch)
-    print_info(">> learned codebook:", cbook_header, codebook,
-               "totalError =", totalError)
+        (cbook_header, codebook) = (list(), list())
+        if(_codebookRandom):
+            codebook = [build_codebook_random(dataset) for i in range(j+1)]
+        else:
+            (cbook_header, codebook) = read_csv(_codebookFileName_csv)
+        print_info(">> initial codebook:", cbook_header, codebook)
+
+        # # learn a codebook (given an initial one)
+        # (codebook, totalError) = train_LVQ(dataset, codebook, _alpha, _maxEpoch)
+        # print_info(">> learned codebook:", cbook_header, codebook, "totalError =", totalError)
+
+        (codebook, totalError) = train_LVQ(dataset, codebook, _alpha, _maxEpoch)
+        totalErrors.append(totalError)
+
+    print(totalErrors)
+
+    with open('totalErrors.csv', 'w') as file:
+        for i in range(100):
+            file.write(str(i)+';' + str(totalErrors[i]).replace('.', ',') + '\n')
 
 
 # ______________________________________________________________________________
