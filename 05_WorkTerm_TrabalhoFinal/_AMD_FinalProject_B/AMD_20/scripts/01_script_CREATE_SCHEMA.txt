@@ -34,7 +34,7 @@ CREATE TABLE TRACK
 	link				VARCHAR,
 	tracking_id			VARCHAR,
 	meio				VARCHAR,
-	ip					VARCHAR,
+	ip				VARCHAR,
 	browser				VARCHAR,
 	session_id			VARCHAR,
 	referer				VARCHAR,
